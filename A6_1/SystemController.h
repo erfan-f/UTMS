@@ -13,7 +13,7 @@
 #include "professor.h"
 #include "student.h"
 #include "method.h"
-#include "post.h"
+#include "post_method.h"
 #include "messages.h"
 
 

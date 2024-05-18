@@ -1,5 +1,5 @@
-utms: main.o SystemController.o user.o student.o professor.o  major.o unit.o CommandOperator.o exception.o method.o post.o
-	g++ -std=c++20 main.o SystemController.o user.o student.o professor.o  major.o unit.o CommandOperator.o exception.o method.o post.o -o utms.out
+utms: main.o SystemController.o user.o student.o professor.o  major.o unit.o CommandOperator.o exception.o method.o post_method.o
+	g++ -std=c++20 main.o SystemController.o user.o student.o professor.o  major.o unit.o CommandOperator.o exception.o method.o post_method.o -o utms.out
 
 main.o: main.cpp
 	g++ -std=c++20 -c main.cpp
@@ -32,8 +32,8 @@ exception.o: exception.cpp
 method.o: method.cpp
 	g++ -std=c++20 -c method.cpp
 
-post.o: post.cpp
-	g++ -std=c++20 -c post.cpp
+post_method.o: post_method.cpp
+	g++ -std=c++20 -c post_method.cpp
 
 clean:
 	rm *.o utms.out

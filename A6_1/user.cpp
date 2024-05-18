@@ -28,3 +28,20 @@ bool User::is_Valid_Password(std::string p)
 	return false;
 }
 
+void User::Add_Post(UT_Post post)
+{
+	post.id = std::to_string(posts.size() + 1);
+	posts.push_back(post);
+}
+
+void User::Connect(User *target)
+{
+	for(int i=0 ; i<connection_list.size() ; i++)
+	{
+		if(connection_list[i] == target)
+			throw CommandException(ERROR_1);
+	}
+	connection_list.push_back(target);
+}
+
+
