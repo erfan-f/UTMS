@@ -8,3 +8,25 @@ Unit::Unit(std::string n,std::string i,int c,std::string pr,std::vector<std::str
 	prerequisite = pr;
 	majors_id = m_i;
 }
+
+bool Unit::is_Valid_Id(std::string i)
+{
+	if(id == i)
+		return true;
+	return false;
+}
+
+std::string Unit::get_Name()
+{
+	return name;
+}
+
+bool Unit::is_Valid_Major(std::string major_id)
+{
+	for(int i=0 ; i<majors_id.size(); i++)
+	{
+		if(major_id == majors_id[i])
+			return true;
+	}
+	return false;
+}

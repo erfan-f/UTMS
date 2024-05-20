@@ -15,6 +15,7 @@
 #include "student.h"
 #include "commands.h"
 #include "messages.h"
+#include "course.h"
 
 
 
@@ -26,15 +27,10 @@ public:
 	Method(std::string t , std::vector <std::string> cmds);
 	bool is_Equal(std::string m);
 	bool is_Cmd_Valid(std::string cmd);
-	virtual void Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users , User **current_user ,bool &user_logged_in) = 0;
+	virtual void Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user,bool &user_logged_in) = 0;
 protected:
 	std::string type;
 	std::vector<std::string> commands;
-	/*std::vector<User*> use;
-	std::vector<Major*> majors;
-	std::vector<Unit*> units;*/
+
 };
-
-
-
 #endif

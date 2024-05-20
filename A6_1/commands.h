@@ -10,5 +10,9 @@ const std::string USER_CMD_TYPE_4 = "post";
 const std::string USER_CMD_TYPE_5 = "personal_page";
 const std::string USER_CMD_TYPE_6 = "connect";
 const std::string USER_CMD_TYPE_7 = "notification";
+const std::string USER_CMD_TYPE_8 = "course_offer";
+const std::string USER_CMD_TYPE_9 = "my_courses";
+
+
 
 #endif

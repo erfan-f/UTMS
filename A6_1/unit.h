@@ -9,6 +9,9 @@ class Unit
 {
 public:
 	Unit(std::string n,std::string i,int c,std::string pr,std::vector<std::string> m_i);
+	bool is_Valid_Id(std::string i);
+	bool is_Valid_Major(std::string major_id);
+	std::string get_Name();
 private:
 	std::string name;
 	std::string id;

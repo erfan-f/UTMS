@@ -1,0 +1,3 @@
+POST login ? id 0 password UT_account
+POST course_offer ? ci 1 pi 810420432 cap 50 time Sunday:13-15 exam 1403/4/4 cl 2
+POST course_offer ? ci 3 pi 810420432 cap 50 time Sunday:10-11 exam 1403/4/5 cl 2

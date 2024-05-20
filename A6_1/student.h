@@ -8,10 +8,12 @@
 class Student : public User 
 {
 public:
-	Student(std::string n,std::string i,std::string m_i,std::string s,std::string p);
+	Student(std::string n,std::string i,std::string m,std::string m_i,std::string s,std::string p);
 
 private:
 	std::string semester;
+	std::string major;
+
 };
 
 #endif
