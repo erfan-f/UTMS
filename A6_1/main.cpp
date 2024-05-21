@@ -1,6 +1,6 @@
 #include <iostream>
-#include "SystemController.h"
-#include "functions.h"
+#include "SystemController.hpp"
+#include "functions.hpp"
 
 
 

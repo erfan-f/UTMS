@@ -2,7 +2,7 @@
 #define GET
 
 #include <string>
-#include "method.h"
+#include "method.hpp"
 
 class Get : public Method
 {

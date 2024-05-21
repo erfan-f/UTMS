@@ -1,7 +1,7 @@
 #ifndef PROFESSOR
 #define PROFESSOR
 #include <string>
-#include "user.h"
+#include "user.hpp"
 
 class Professor : public User 
 {

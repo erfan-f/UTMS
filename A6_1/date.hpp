@@ -11,6 +11,7 @@ public:
     Date();
     Date(int d , int m , int y);
     void Print();
+    bool is_Equal_Date(Date* date);
 
 private:
     int day;

@@ -1,4 +1,4 @@
-#include "major.h"
+#include "major.hpp"
 
 Major::Major(std::string n , std::string i)
 {

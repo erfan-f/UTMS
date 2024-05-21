@@ -6,17 +6,18 @@
 #include <fstream>
 #include <sstream>
 
-#include "exception.h"
-#include "major.h"
-#include "unit.h"
-#include "user.h"
-#include "professor.h"
-#include "student.h"
-#include "messages.h"
-#include "SystemOperator.h"
-#include "course.h"
-#include "post_method.h"
-#include "get_method.h"
+#include "exception.hpp"
+#include "major.hpp"
+#include "unit.hpp"
+#include "user.hpp"
+#include "professor.hpp"
+#include "student.hpp"
+#include "messages.hpp"
+#include "SystemOperator.hpp"
+#include "course.hpp"
+#include "post_method.hpp"
+#include "get_method.hpp"
+#include "Put_method.hpp"
 
 const std::string OPERATOR_NAME = "Operator";
 const std::string OPERATOR_ID = "0";
@@ -32,8 +33,6 @@ const std::string METHOD_3 = "PUT";
 const std::string METHOD_4 = "DELETE";
 
 const std::string ARGUMANT = "?";
-
-
 
 
 

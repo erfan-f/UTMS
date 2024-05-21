@@ -12,6 +12,8 @@ public:
 	bool is_Valid_Id(std::string i);
 	bool is_Valid_Major(std::string major_id);
 	std::string get_Name();
+	std::vector <std::string> get_Majors_Id();
+	std::string get_Prerequisite();
 private:
 	std::string name;
 	std::string id;

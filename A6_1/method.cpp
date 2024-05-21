@@ -1,4 +1,4 @@
-#include "method.h"
+#include "method.hpp"
 
 Method::Method(std::string t , std::vector <std::string> cmds)
 {

@@ -1,4 +1,4 @@
-#include "get_method.h"
+#include "get_method.hpp"
 
 Get::Get(std::string t , std::vector <std::string> cmds)
 :Method(t,cmds) {}

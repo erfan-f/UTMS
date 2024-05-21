@@ -1,4 +1,4 @@
-#include "SystemController.h"
+#include "SystemController.hpp"
 
 SystemController::SystemController()
 {
@@ -8,9 +8,10 @@ SystemController::SystemController()
 
 	Post *post = new Post(METHOD_1,{USER_CMD_TYPE_1,USER_CMD_TYPE_2,USER_CMD_TYPE_6,USER_CMD_TYPE_4,USER_CMD_TYPE_8});
 	Get *get = new Get(METHOD_2,{USER_CMD_TYPE_3,USER_CMD_TYPE_5,USER_CMD_TYPE_4,USER_CMD_TYPE_7,USER_CMD_TYPE_9});
-
+	Put *put = new Put(METHOD_3,{USER_CMD_TYPE_9});
 	methods.push_back(post);
 	methods.push_back(get);
+	methods.push_back(put);
 
 }
 

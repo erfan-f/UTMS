@@ -2,8 +2,8 @@
 #define POST
 
 #include <string>
-#include "method.h"
-#include "UT_post.h"
+#include "method.hpp"
+#include "UT_post.hpp"
 
 
 class Post : public Method

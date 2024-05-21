@@ -1,4 +1,4 @@
-#include "professor.h"
+#include "professor.hpp"
 
 Professor::Professor(std::string n,std::string i,std::string m,std::string m_i,std::string po,std::string p)
 :User(n,i,m,m_i,p)

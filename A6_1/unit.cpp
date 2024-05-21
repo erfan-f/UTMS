@@ -1,4 +1,4 @@
-#include "unit.h"
+#include "unit.hpp"
 
 Unit::Unit(std::string n,std::string i,int c,std::string pr,std::vector<std::string> m_i)
 {
@@ -20,6 +20,17 @@ std::string Unit::get_Name()
 {
 	return name;
 }
+
+std::vector <std::string> Unit::get_Majors_Id()
+{
+	return majors_id;
+}
+
+std::string Unit::get_Prerequisite()
+{
+	return prerequisite;
+}
+
 
 bool Unit::is_Valid_Major(std::string major_id)
 {

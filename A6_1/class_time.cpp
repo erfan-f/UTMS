@@ -1,4 +1,4 @@
-#include "class_time.h"
+#include "class_time.hpp"
 
 Class_Time::Class_Time()
 {
@@ -32,3 +32,15 @@ void Class_Time::Print()
     std::cout << day << DAY_TIME_SEPRATOR << start << START_END_SEPRATOR << end;
 }
 
+std::string Class_Time::get_Day()
+{
+    return day;
+}
+int Class_Time::get_Start()
+{
+    return start;
+}
+int Class_Time::get_End()
+{
+    return end;
+}

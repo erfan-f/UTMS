@@ -1,4 +1,4 @@
-#include "exception.h"
+#include "exception.hpp"
 
 
 MethodException::MethodException(std::string text)

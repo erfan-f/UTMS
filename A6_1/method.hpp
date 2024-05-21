@@ -7,15 +7,15 @@
 #include <sstream>
 
 
-#include "exception.h"
-#include "major.h"
-#include "unit.h"
-#include "user.h"
-#include "professor.h"
-#include "student.h"
-#include "commands.h"
-#include "messages.h"
-#include "course.h"
+#include "exception.hpp"
+#include "major.hpp"
+#include "unit.hpp"
+#include "user.hpp"
+#include "professor.hpp"
+#include "student.hpp"
+#include "commands.hpp"
+#include "messages.hpp"
+#include "course.hpp"
 
 
 

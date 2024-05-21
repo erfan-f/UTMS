@@ -3,8 +3,8 @@
 
 #include <string>
 #include <sstream>
-#include "exception.h"
-#include "SystemController.h"
+#include "exception.hpp"
+#include "SystemController.hpp"
 
 void Command_Operator(SystemController &engine);
 

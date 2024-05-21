@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
-#include "UT_post.h"
+#include "UT_post.hpp"
 
 
 bool CompareByid(const UT_Post *a ,const UT_Post *b);
@@ -14,23 +14,16 @@ enum week
 
 int main()
 {
-    std::string str = "message \"Hello to you my dear dear friend\" title";
-    std::string opr;
+    std::string str = "hello fkldsmfkl  kdslfdsklf               skldgkldsfkl";
+
     std::stringstream S(str);
 
-    int x = str.find('"');
-    std::string str1;
-    str1 = str.erase(0,x+1);
+    std::string name,str2;
 
-    int y= str.find('"');
-    std::string str2 = str1.substr(0,y);
-    S >> opr;
+    S >> name;
+    S >> str2;
 
-    std::string final = '"' + str2 + '"';
-
-
-    std::cout << str2 << std::endl;
-
+    std::cout << name << std::endl;
     return 0;
 }
 

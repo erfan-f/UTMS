@@ -5,13 +5,13 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "exception.h"
-#include "commands.h"
-#include "messages.h"
-#include "UT_post.h"
+#include "exception.hpp"
+#include "commands.hpp"
+#include "messages.hpp"
+#include "UT_post.hpp"
 #include "notification.hpp"
-#include "unit.h"
-#include "course.h"
+#include "unit.hpp"
+#include "course.hpp"
 
 
 const std::string USER_TYPE_1 = "Professor";
@@ -43,7 +43,6 @@ public:
 	void Recieve_Notification(Notification* notif);
 	void Print_Notifications();
 
-	
 protected:	
 	bool logged_in;
 	std::string user_type;

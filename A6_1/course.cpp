@@ -1,12 +1,14 @@
-#include "course.h"
+#include "course.hpp"
 
-Course::Course(std::string i,std::string n , std::string p_n , int cap ,std::string d, std::string t,std::string c_n)
+Course::Course(std::string i,std::string n , std::string p_n , int cap ,std::vector <std::string> m_i,std::string pre,std::string d, std::string t,std::string c_n)
 {
     id = i;
     name = n;
     professor_name = p_n;
     capacity = cap;
     class_number = c_n;
+    majors_id = m_i;
+    prerequisite = pre;
 
     std::stringstream S(d);
     std::string day,month,year;
@@ -49,6 +51,23 @@ bool Course::is_Valid_Id(std::string course_id)
     return false;
 }
 
+bool Course::is_Valid_Semester(std::string semester)
+{
+    if(std::stoi(semester) >= std::stoi(prerequisite))
+        return true;
+    return false;
+}
+
+bool Course::is_Valid_Major(std::string id)
+{
+    for(int i=0 ; i<majors_id.size() ; i++)
+    {
+        if(id == majors_id[i])
+            return true;
+    }
+    return false;
+}
+
 void Course::Print_Info()
 {
     std::cout << id << " " << name << " " <<  capacity << " " << professor_name << std::endl;
@@ -68,6 +87,21 @@ std::string Course::get_Name()
     return name;
 }
 
-   
+bool Course::is_Interrupted(Course *course)
+{
+    if(exam_date->is_Equal_Date(course->exam_date))
+    {
+        return true;
+    }
 
+    std::string day_of_week;
+    int start_time,end_time;
+    day_of_week = course->class_time->get_Day();
+    start_time = course->class_time->get_Start();
+    end_time = course->class_time->get_End();
 
+    if(class_time->is_Interrupt_Time(day_of_week,start_time,end_time))
+        return true;
+    
+    return false;
+}

@@ -1,4 +1,4 @@
-#include "post_method.h"
+#include "post_method.hpp"
 
 Post::Post(std::string t , std::vector <std::string> cmds)
 :Method(t,cmds){}
@@ -127,7 +127,7 @@ void Post::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::v
 			throw CommandException(ERROR_3);
 
 		int id = courses.size() + 1;
-		Course *new_course = new Course(std::to_string(id),unit->get_Name(),professor->get_Name(),capacity,exam_date,time,class_number);
+		Course *new_course = new Course(std::to_string(id),unit->get_Name(),professor->get_Name(),capacity,unit->get_Majors_Id(),unit->get_Prerequisite(),exam_date,time,class_number);
 		courses.push_back(new_course);
 		professor->Add_New_Course(new_course);
 
