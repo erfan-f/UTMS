@@ -68,10 +68,23 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 	{
 		std::string operator_str;
 		S >> operator_str;
-		if(operator_str == "")
-			(*current_user)->Print_Notifications();
-		else
+		if(operator_str != "")
 			throw CommandException(ERROR_1);
+		
+		(*current_user)->Print_Notifications();
+	}
+	else if(command == USER_CMD_TYPE_9)
+	{
+		std::string operator_str;
+		S >> operator_str;
+		if(operator_str != "")
+			throw CommandException(ERROR_1);
+
+		Student *student = dynamic_cast<Student*>(*current_user);
+		if(student == NULL)
+            throw CommandException(ERROR_3);
+
+		student->Print_Courses();
 	}
 }
 
@@ -124,7 +137,7 @@ void Get::Print_Personal_Page(std::vector<User*> &users,std::string user_id)
 	if(!id_validation)
 		throw CommandException(ERROR_2);
 
-	user->Print_Info();
+	user->Print_Page_Info();
 }
 
 void Get::Print_User_Posts(std::vector<User*> &users,std::string user_id,std::string post_id)

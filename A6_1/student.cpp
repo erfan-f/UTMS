@@ -56,3 +56,31 @@ bool Student::is_Allowed_to_Take(Course* new_course)
 
 	return true;
 }
+
+void Student::Delete_Course(std::string course_id)
+{
+	bool id_validation = false;
+	for(int i=0 ; i<courses.size() ; i++)
+	{
+		if(courses[i]->is_Valid_Id(course_id))
+		{
+			id_validation = true;
+			delete courses[i];
+			courses.erase(courses.begin() + i);
+			break;
+		}
+	}
+	if(!id_validation)
+		throw CommandException(ERROR_2);
+}
+
+
+void Student::Print_Courses()
+{
+	if(courses.size() == 0)
+		throw CommandException(ERROR_4);
+	for(int i=0 ; i<courses.size() ; i++)
+	{
+		courses[i]->Print_All_Info();
+	}
+}

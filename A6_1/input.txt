@@ -6,11 +6,15 @@ POST login ? password ImtheproblemItsme id 810102612
 POST connect ? id 810420432
 POST logout ?
 POST login ? id 810420432  password 1330
-GET personal_page ? id 810420432
+POST post ? title "title 1" message "Hello my dear dear firend!"
+POST post ? title "title 2" message "Goodbye!"
+POST post ? title "title 3" message "whaaaaaaaaat!"
+DELETE post ? id 2
 POST logout ?
 POST login ? password ImtheproblemItsme id 810102612
-GET notification ?
-GET courses ? id 1
-GET courses ? id 2
-PUT my_courses ? id 1
+GET my_courses ? 
 PUT my_courses ? id 2
+PUT my_courses ? id 1
+DELETE my_courses ? id 2
+DELETE my_courses ? id 1
+GET my_courses ? 

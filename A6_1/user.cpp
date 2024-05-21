@@ -6,6 +6,7 @@ User::User(std::string n,std::string i,std::string p)
 	id = i;
 	password = p;
 	logged_in = false;
+	num_of_posts_history = 0;
 }
 
 User::User(std::string n,std::string i,std::string m,std::string m_i,std::string p)
@@ -16,6 +17,7 @@ User::User(std::string n,std::string i,std::string m,std::string m_i,std::string
 	major = m;
 	password = p;
 	logged_in = false;
+	num_of_posts_history = 0;
 }
 
 bool User::is_Valid_Id(std::string i)
@@ -33,10 +35,11 @@ bool User::is_Valid_Password(std::string p)
 }
 
 void User::Add_Post(UT_Post *post)
-{
-	post->id = std::to_string(posts.size() + 1);
+{	
+	post->id = std::to_string(num_of_posts_history +1);
 	posts.push_back(post);
 	Send_Notification(NOTIFICATION_1);
+	num_of_posts_history++;
 }
 
 void User::Connect(User *target)
@@ -149,4 +152,21 @@ void User::Print_Notifications()
 		std::cout << notifications[i]->user_id << " " << notifications[i]->name << ": " << notifications[i]->notice << std::endl;
 	}
 	notifications.clear();
+}
+
+void User::Delete_Post(std::string post_id)
+{
+	bool id_validation = false;
+	for(int i=0 ; i<posts.size() ; i++)
+	{
+		if(posts[i]->id == post_id)
+		{
+			id_validation = true;
+			delete posts[i];
+			posts.erase(posts.begin() + i);
+			break;
+		}
+	}
+	if(!id_validation)
+		throw CommandException(ERROR_2);
 }

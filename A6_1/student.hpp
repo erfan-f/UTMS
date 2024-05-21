@@ -12,6 +12,8 @@ public:
 	void Print_Info();
 	void Print_Page_Info();
 	bool is_Allowed_to_Take(Course* new_course);
+	void Print_Courses();
+	void Delete_Course(std::string course_id);
 
 private:
 	std::string semester;

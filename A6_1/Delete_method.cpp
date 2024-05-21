@@ -15,11 +15,35 @@ void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std:
     {
         std::string id_operator,id;
 
-        S >> id_operator,id;
+        S >> id_operator >> id;
+        
+        if(id_operator != "id")
+            throw CommandException(ERROR_1);
 
+        if(std::stoi(id) <= 0)
+            throw CommandException(ERROR_1);
+
+        (*current_user)->Delete_Post(id);
+        std::cout << DONE_MESSAGE << std::endl;
     }
     else if(command == USER_CMD_TYPE_9)
     {
+         std::string id_operator,id;
 
+        S >> id_operator >> id;
+        
+        if(id_operator != "id")
+            throw CommandException(ERROR_1);
+
+        if(std::stoi(id) <= 0)
+            throw CommandException(ERROR_1);
+
+        Student* student= dynamic_cast<Student*>(*current_user);
+        if(student == NULL)
+            throw CommandException(ERROR_3);
+            
+        student->Delete_Course(id);
+        std::cout << DONE_MESSAGE << std::endl;
     }
 }
+

@@ -18,6 +18,8 @@
 #include "post_method.hpp"
 #include "get_method.hpp"
 #include "Put_method.hpp"
+#include "Delete_method.hpp"
+
 
 const std::string OPERATOR_NAME = "Operator";
 const std::string OPERATOR_ID = "0";

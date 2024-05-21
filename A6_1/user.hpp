@@ -42,6 +42,7 @@ public:
 	void Send_Notification(std::string notice_text);
 	void Recieve_Notification(Notification* notif);
 	void Print_Notifications();
+	void Delete_Post(std::string post_id);
 
 protected:	
 	bool logged_in;
@@ -56,6 +57,7 @@ protected:
 	std::vector<User*> connection_list;
 	std::vector<Course*> courses;
 	std::vector<Notification*> notifications;
+	int num_of_posts_history;
 };
 
 #endif
