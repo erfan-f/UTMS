@@ -7,8 +7,10 @@ SystemController::SystemController()
 	user_logged_in  = false;
 
 	Post *post = new Post(METHOD_1,{USER_CMD_TYPE_1,USER_CMD_TYPE_2,USER_CMD_TYPE_6,USER_CMD_TYPE_4,USER_CMD_TYPE_8});
-	
+	Get *get = new Get(METHOD_2,{USER_CMD_TYPE_3,USER_CMD_TYPE_5,USER_CMD_TYPE_4,USER_CMD_TYPE_7,USER_CMD_TYPE_9});
+
 	methods.push_back(post);
+	methods.push_back(get);
 
 }
 
@@ -68,7 +70,7 @@ void SystemController::Read_Units(std::string file_path)
 void SystemController::Read_Professor(std::string file_path)
 {
 
-	std::string  name,id,major_id,position,password;
+	std::string  name,id,major,major_id,position,password;
 
 	std::fstream fin;
 	fin.open(file_path,std::ios::in);
@@ -84,8 +86,10 @@ void SystemController::Read_Professor(std::string file_path)
 		getline(S,major_id,SEPRATOR);
 		getline(S,position,SEPRATOR);
 		getline(S,password,SEPRATOR);
-	
-		Add_Professor(name,id,major_id,position,password);
+
+		major = Specify_Major(major_id);
+
+		Add_Professor(name,id,major,major_id,position,password);
 	}
 }
 
@@ -109,11 +113,7 @@ void SystemController::Read_Student(std::string file_path)
 		getline(S,semester,SEPRATOR);
 		getline(S,password,SEPRATOR);
 
-		for(int i=0 ; i<majors.size() ; i++)
-		{
-			if(majors[i]->is_Valid_Id(major_id))
-				major = majors[i]->get_Name();
-		}
+		major = Specify_Major(major_id);
 		
 		Add_Student(name,id,major,major_id,semester,password);
 	}
@@ -133,9 +133,9 @@ void SystemController::Add_Unit(std::string name,std::string id,int credit,std::
 	units.push_back(u);
 }
 
-void SystemController::Add_Professor(std::string name,std::string id,std::string major_id,std::string position,std::string password)
+void SystemController::Add_Professor(std::string name,std::string id,std::string major,std::string major_id,std::string position,std::string password)
 {
-	Professor *p = new Professor(name,id,major_id,position,password);
+	Professor *p = new Professor(name,id,major,major_id,position,password);
 	users.push_back(p);
 }
 
@@ -196,5 +196,18 @@ Method* SystemController::Specify_Method(std::string method_type)
 	throw MethodException(ERROR_1);
 }
 
+std::string SystemController::Specify_Major(std::string id)
+{
+	std::string major;
+	for(int i=0 ; i<majors.size() ; i++)
+	{
+		if(majors[i]->is_Valid_Id(id))
+		{
+			major = majors[i]->get_Name();
+			break;
+		}
+	}
+	return major;
+}
 
 

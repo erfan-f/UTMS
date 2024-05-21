@@ -8,11 +8,12 @@ User::User(std::string n,std::string i,std::string p)
 	logged_in = false;
 }
 
-User::User(std::string n,std::string i,std::string m_i,std::string p)
+User::User(std::string n,std::string i,std::string m,std::string m_i,std::string p)
 {
 	name = n;
 	id = i;
 	major_id = m_i;
+	major = m;
 	password = p;
 	logged_in = false;
 }
@@ -31,9 +32,9 @@ bool User::is_Valid_Password(std::string p)
 	return false;
 }
 
-void User::Add_Post(UT_Post post)
+void User::Add_Post(UT_Post *post)
 {
-	post.id = std::to_string(posts.size() + 1);
+	post->id = std::to_string(posts.size() + 1);
 	posts.push_back(post);
 }
 
@@ -82,3 +83,44 @@ std::string User::get_Major_Id()
 	return major_id;
 }
 
+std::string User::get_Name()
+{
+	return name;
+}
+
+void User::Sort_Posts()
+{
+	UT_Post *temp;
+	for(int i=0 ; i<posts.size() ; i++)
+	{
+		for(int j=0 ; j<posts.size() -1 ; j++)
+		{
+			if(posts[j]->id < posts[j+1]->id)
+			{
+				temp = posts[j];
+				posts[j] = posts[j+1];
+				posts[j+1] = temp;
+			}
+		}
+	}
+}
+
+void User::Print_Post(std::string post_id)
+{
+	UT_Post *post;
+	bool id_validation = false;
+
+	for(int i=0 ; i<posts.size() ; i++)
+	{
+		if(posts[i]->id == post_id)
+		{
+			id_validation = true;
+			post = posts[i];
+			break;
+		}
+	}
+	if(!id_validation)
+		throw CommandException(ERROR_2);
+	this->Print_Info();
+	std::cout << post->id << " " << post->title << " " << post->message << std::endl;
+}

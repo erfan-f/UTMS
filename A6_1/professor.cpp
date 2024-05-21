@@ -1,7 +1,7 @@
 #include "professor.h"
 
-Professor::Professor(std::string n,std::string i,std::string m_i,std::string po,std::string p)
-:User(n,i,m_i,p)
+Professor::Professor(std::string n,std::string i,std::string m,std::string m_i,std::string po,std::string p)
+:User(n,i,m,m_i,p)
 {
 	position = po;
 	user_type = USER_TYPE_1;
@@ -31,3 +31,39 @@ bool Professor::is_Free(std::string time)
 	}
 	return true;
 }
+
+
+void Professor::Print_Info()
+{
+	std::cout << name << " " << major << " " << position << " ";
+	for(int i=0 ; i<courses.size() ; i++)
+	{
+		std::cout << courses[i]->get_Name();
+		if(i != courses.size() - 1)
+			std::cout << ",";
+		else
+			std::cout << std::endl;
+	}
+
+}
+
+void Professor::Print_Page_Info()
+{
+	Print_Info();
+	
+	Sort_Posts();
+
+	for(int j=0 ; j<posts.size() ; j++)
+	{
+		std::cout <<  posts[j]->id << " " << posts[j]->title << std::endl;
+	}	
+}
+
+
+
+
+
+
+
+
+

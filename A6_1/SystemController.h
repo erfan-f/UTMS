@@ -12,11 +12,11 @@
 #include "user.h"
 #include "professor.h"
 #include "student.h"
-#include "method.h"
-#include "post_method.h"
 #include "messages.h"
 #include "SystemOperator.h"
 #include "course.h"
+#include "post_method.h"
+#include "get_method.h"
 
 const std::string OPERATOR_NAME = "Operator";
 const std::string OPERATOR_ID = "0";
@@ -47,12 +47,11 @@ public:
 	void Read_Student(std::string file_path);
 	void Add_Major(std::string name,std::string id);
 	void Add_Unit(std::string name,std::string id,int credit,std::string prerequisite,std::vector<std::string> majors_id);
-	void Add_Professor(std::string name,std::string id,std::string major_id,std::string position,std::string password);
+	void Add_Professor(std::string name,std::string id,std::string major,std::string major_id,std::string position,std::string password);
 	void Add_Student(std::string name,std::string id,std::string major,std::string major_id,std::string semester,std::string password);
 	void Handle_Cmd(std::string cmd_line);
 	Method* Specify_Method(std::string method_type);
-	void give_User_Access();
-
+	std::string Specify_Major(std::string id);
 
 private:
 	std::vector<User*> users;

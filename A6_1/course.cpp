@@ -1,10 +1,10 @@
 #include "course.h"
 
-Course::Course(std::string i,std::string n , std::string p_i , int cap ,std::string d, std::string t,std::string c_n)
+Course::Course(std::string i,std::string n , std::string p_n , int cap ,std::string d, std::string t,std::string c_n)
 {
     id = i;
     name = n;
-    professor_id = p_i;
+    professor_name = p_n;
     capacity = cap;
     class_number = c_n;
 
@@ -41,3 +41,33 @@ bool Course::is_Interrupt_Course(std::string time)
         return true;
     return false;
 }
+
+bool Course::is_Valid_Id(std::string course_id)
+{
+    if(id == course_id)
+        return true;
+    return false;
+}
+
+void Course::Print_Info()
+{
+    std::cout << id << " " << name << " " <<  capacity << " " << professor_name << std::endl;
+}
+
+void Course::Print_All_Info()
+{
+    std::cout << id << " " << name << " " <<  capacity << " " << professor_name << " ";
+    class_time->Print();
+    std::cout << " ";
+    exam_date->Print();
+    std::cout << " " << class_number << std::endl;
+}
+
+std::string Course::get_Name()
+{
+    return name;
+}
+
+   
+
+

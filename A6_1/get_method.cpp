@@ -3,7 +3,7 @@
 Get::Get(std::string t , std::vector <std::string> cmds)
 :Method(t,cmds) {}
 
-void Get::Porcess_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users , User **current_user,bool &user_logged_in)
+void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user,bool &user_logged_in)
 {
 	std::stringstream S(cmd_line);
 
@@ -15,50 +15,124 @@ void Get::Porcess_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 	{
 		std::string id_operator,id;
 		S >> id_operator >> id;
-		if(std::stoi(id) <= 0)
-			throw CommandException(ERROR_1);
+		if(id_operator == "")
+		{
+			Print_All_Courses(courses);
+		}
+		else
+		{
+			if(id_operator != "id")
+				throw CommandException(ERROR_1);
+			if(std::stoi(id) <= 0)
+				throw CommandException(ERROR_1);
+			Print_Course(courses,id);
+		}
 	}
-	if(command == USER_CMD_TYPE_5)
+	else if(command == USER_CMD_TYPE_5)
 	{
 		std::string id_operator,id;
 		S >> id_operator >> id;
+		if(id_operator != "id")
+			throw CommandException(ERROR_1);
 		if(std::stoi(id) < 0)
 			throw CommandException(ERROR_1);
-		//Print_Personal_Page(users,id);
+		Print_Personal_Page(users,id);
+	}
+	else if(command == USER_CMD_TYPE_4)
+	{
+		std::string operator_1 , operator_2 , input_1 , input_2;
+		std::string id,post_id;
+		S >> operator_1 >> input_1 >> operator_2 >> input_2;
+		if((operator_1 == "id" || operator_1 == "post_id") && (operator_2 == "id" || operator_2 == "post_id"))
+		{
+			if(operator_1 == "id")
+			{
+				id = input_1;
+				post_id = input_2;
+			}
+			else
+			{
+				id = input_2;
+				post_id = input_1;
+			}
+		}
+		else
+			throw CommandException(ERROR_1);
 
+		if(std::stoi(id) <=0 || std::stoi(post_id) <=0)
+			throw CommandException(ERROR_1);
+
+		Print_User_Posts(users,id,post_id);
 	}
 }
 
-/*void Get::Print_Courses(std::vector<Unit*> &units , std::string id)
-{
-	bool course_validation = false;
-	for(int i=0 ; i<units.size() ; i++)
+
+void Get::Print_All_Courses(std::vector<Course*> courses)
+{	
+	if(courses.size() == 0)
+		throw CommandException(ERROR_4);
+
+	for(int i=0 ; i<courses.size(); i++)
 	{
-		if(units[i]->is_Valid_Id(id))
+		courses[i]->Print_Info();
+	}
+	
+}
+
+void Get::Print_Course(std::vector<Course*> courses , std::string course_id)
+{
+	Course *target_course;
+	bool id_validation = false;
+	for(int i=0 ; i<courses.size() ; i++)
+	{
+		if(courses[i]->is_Valid_Id(course_id))
 		{
-			//units[i]->Print_Info();
-			course_validation = true;
+			id_validation = true;
+			target_course = courses[i];
 			break;
 		}
 	}
-	if(!course_validation)
-		return CommandException(ERROR_1);
-}*/
+	if(!id_validation)
+		throw CommandException(ERROR_2);
+	
+	target_course->Print_All_Info();
+}
 
 
-/*void Get::Print_Personal_Page(std::vector<User*> &users,std::string id)
+void Get::Print_Personal_Page(std::vector<User*> &users,std::string user_id)
 {
-	bool user_validation = false;
+	User *user;
+	bool id_validation = false;
 	for(int i=0 ; i<users.size() ; i++)
 	{
-		if(users[i]->is_Valid_Id(id))
+		if(users[i]->is_Valid_Id(user_id))
 		{
-			User *user = users[i];
-			Student *student;
-			student = dynamic_cast<Student*>(user);
-			Professor *professor;
-			users[i]->Print_Info();
+			id_validation = true;
+			user = users[i];
 			break;
 		}
 	}
-}*/
+	if(!id_validation)
+		throw CommandException(ERROR_2);
+
+	user->Print_Info();
+}
+
+void Get::Print_User_Posts(std::vector<User*> &users,std::string user_id,std::string post_id)
+{
+	User *user;
+	bool id_validation = false;
+	for(int i=0 ; i<users.size() ; i++)
+	{
+		if(users[i]->is_Valid_Id(user_id))
+		{
+			id_validation = true;
+			user = users[i];
+			break;
+		}
+	}
+	if(!id_validation)
+		throw CommandException(ERROR_2);
+	
+	user->Print_Post(post_id);
+}

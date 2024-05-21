@@ -12,8 +12,7 @@ int main(int argc ,char *argv[])
 	engine.Read_Units(argv[2]);
 	engine.Read_Professor(argv[3]);
 	engine.Read_Student(argv[4]);
-
-
+	
 	Command_Operator(engine);
 
 	return 0;

@@ -14,3 +14,8 @@ Date::Date(int d , int m , int y)
     month = m;
     year = y;
 }
+
+void Date::Print()
+{
+    std::cout << year << DATE_SEPRATOR << month << DATE_SEPRATOR << day;
+} 

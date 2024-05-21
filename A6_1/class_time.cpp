@@ -27,3 +27,8 @@ bool Class_Time::is_Interrupt_Time(std::string day_of_week , int start_time , in
         return false;
 }
 
+void Class_Time::Print()
+{
+    std::cout << day << DAY_TIME_SEPRATOR << start << START_END_SEPRATOR << end;
+}
+

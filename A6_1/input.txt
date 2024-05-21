@@ -1,3 +1,15 @@
 POST login ? id 0 password UT_account
-POST course_offer ? ci 1 pi 810420432 cap 50 time Sunday:13-15 exam 1403/4/4 cl 2
-POST course_offer ? ci 3 pi 810420432 cap 50 time Sunday:10-11 exam 1403/4/5 cl 2
+POST course_offer ? course_id 1 professor_id 810420432 capacity 50 time Sunday:12-14 exam_date 1403/4/4 class_number 2
+POST course_offer ? course_id 2 professor_id 810420432 capacity 10 time Sunday:14-16 exam_date 1403/4/10 class_number 1
+POST course_offer ?  capacity 90 class_number 1 course_id 3 time Monday:14-16 exam_date 1403/4/10 professor_id 810420432
+POST logout ?
+POST login ? id 810420432  password 1330
+POST post ? title "title1" message "text 1"
+POST post ? title "title2" message "Hello my dear dear friend!"
+POST post ? title "title3" message "text 3"
+POST post ? title "title4" message "text 4"
+GET personal_page ? id 810420432
+GET courses ? id 3
+POST logout ?
+POST login ? password ImtheproblemItsme id 810102612
+GET post ? post_id 6 id 810420432

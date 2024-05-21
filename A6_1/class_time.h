@@ -17,6 +17,8 @@ public:
     Class_Time();
     Class_Time(std::string day_of_week , int s , int e);
     bool is_Interrupt_Time(std::string day_of_week , int start_time , int end_time);
+    void Print();
+
 private:
     int start;
     int end;
