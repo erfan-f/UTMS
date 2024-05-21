@@ -64,6 +64,15 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 
 		Print_User_Posts(users,id,post_id);
 	}
+	else if(command == USER_CMD_TYPE_7)
+	{
+		std::string operator_str;
+		S >> operator_str;
+		if(operator_str == "")
+			(*current_user)->Print_Notifications();
+		else
+			throw CommandException(ERROR_1);
+	}
 }
 
 

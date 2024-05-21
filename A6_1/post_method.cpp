@@ -107,7 +107,6 @@ void Post::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::v
 				throw CommandException(ERROR_1);
 		}
 
-
 		int capacity = std::stoi(capacity_str);
 
 		if(capacity <=0 || std::stoi(class_number) <=0)
@@ -132,6 +131,8 @@ void Post::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::v
 		courses.push_back(new_course);
 		professor->Add_New_Course(new_course);
 
+		Send_New_Course_Notification(users,professor_id,professor->get_Name(),NOTIFICATION_2);
+
 		std::cout << DONE_MESSAGE << std::endl;
 
 	}
@@ -153,17 +154,17 @@ User* Post::Log_in(std::vector<User*> &users , std::string id , std::string pass
 
 void Post::Connect_Two_User(std::vector<User*> &users , std::string target_id ,User **current_user)
 {
-	bool valid_id = false;
+	bool id_validation = false;
 	for(int i=0 ; i<users.size() ; i++)
 	{
 		if(users[i]->is_Valid_Id(target_id))
 		{
-			valid_id = true;
+			id_validation = true;
 			users[i]->Connect(*current_user);
-			(*current_user)->Connect(users[i]);
+			break;
 		}
 	}
-	if(!valid_id)
+	if(!id_validation)
 		throw CommandException(ERROR_2);
 }
 
@@ -229,4 +230,14 @@ void Post::Text_Reader(std::string cmd_line,std::string &opr1,std::string &opr2,
 	std::string str4 = new_cmd_line.substr(0,second_delimiter);
 
 	inp2 = '"' + str4 + '"';
+}
+
+
+void Post::Send_New_Course_Notification(std::vector<User*> users,std::string id,std::string name,std::string notice_text)
+{
+	Notification *new_notif = new Notification{id,name,notice_text};
+	for(int i=1 ; i<users.size() ; i++)
+	{
+		users[i]->Recieve_Notification(new_notif);
+	}
 }

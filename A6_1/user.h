@@ -9,6 +9,7 @@
 #include "commands.h"
 #include "messages.h"
 #include "UT_post.h"
+#include "notification.hpp"
 #include "unit.h"
 #include "course.h"
 
@@ -38,6 +39,10 @@ public:
 	std::string get_Name();
 	void Sort_Posts();
 	void Print_Post(std::string post_id);
+	void Send_Notification(std::string notice_text);
+	void Recieve_Notification(Notification* notif);
+	void Print_Notifications();
+
 	
 protected:	
 	bool logged_in;
@@ -50,7 +55,8 @@ protected:
 	std::vector<std::string> valid_cmds;
 	std::vector<UT_Post*> posts;
 	std::vector<User*> connection_list;
-	std::vector <Course *> courses;
+	std::vector<Course*> courses;
+	std::vector<Notification*> notifications;
 };
 
 #endif

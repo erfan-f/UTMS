@@ -36,6 +36,7 @@ void User::Add_Post(UT_Post *post)
 {
 	post->id = std::to_string(posts.size() + 1);
 	posts.push_back(post);
+	Send_Notification(NOTIFICATION_1);
 }
 
 void User::Connect(User *target)
@@ -123,4 +124,29 @@ void User::Print_Post(std::string post_id)
 		throw CommandException(ERROR_2);
 	this->Print_Info();
 	std::cout << post->id << " " << post->title << " " << post->message << std::endl;
+}
+
+void User::Send_Notification(std::string notice_text)
+{
+	Notification *new_notif = new Notification{id,name,notice_text};
+	for(int i=0 ; i<connection_list.size() ; i++)
+	{
+		connection_list[i]->Recieve_Notification(new_notif);
+	}
+}
+
+void User::Recieve_Notification(Notification* notif)
+{
+	notifications.push_back(notif);
+}
+
+void User::Print_Notifications()
+{
+	if(notifications.size() == 0)
+		throw CommandException(ERROR_4);
+	for(int i= notifications.size() - 1 ; i>=0 ; i--)
+	{
+		std::cout << notifications[i]->user_id << " " << notifications[i]->name << ": " << notifications[i]->notice << std::endl;
+	}
+	notifications.clear();
 }

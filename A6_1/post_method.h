@@ -16,7 +16,7 @@ public:
 	User* Specify_User(std::vector<User*> &users , std::string professor_id);
 	Unit* Specify_Unit(std::vector<Unit*> , std::string unit_id);
 	void Text_Reader(std::string cmd_line,std::string &opr1,std::string &opr2,std::string &inp1,std::string &inp2);
-
+	void Send_New_Course_Notification(std::vector<User*> users,std::string id,std::string name,std::string notice_text);
 };
 
 #endif
