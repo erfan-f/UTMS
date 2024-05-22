@@ -46,6 +46,7 @@ public:
 	void Read_Units(std::string file_path);
 	void Read_Professor(std::string file_path);
 	void Read_Student(std::string file_path);
+	void Connect_To_All_User();
 	void Add_Major(std::string name,std::string id);
 	void Add_Unit(std::string name,std::string id,int credit,std::string prerequisite,std::vector<std::string> majors_id);
 	void Add_Professor(std::string name,std::string id,std::string major,std::string major_id,std::string position,std::string password);

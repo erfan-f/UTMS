@@ -40,10 +40,13 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 			throw ArgumentException(ERROR_1);
 		*current_user = User_Login(users,id,password);
 		std::cout << DONE_MESSAGE << std::endl;
-
 	}
 	else if(command == USER_CMD_TYPE_2)
 	{
+		std::string garbage_string;
+		S >> garbage_string;
+		if(garbage_string != "")
+			throw ArgumentException(ERROR_1);
 		(*current_user)->Logout();
 		*current_user = NULL;
 		std::cout << DONE_MESSAGE << std::endl;
@@ -73,17 +76,24 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		UT_Post *p = new UT_Post{"",title,message};
 		(*current_user)->Add_Post(p);
 
+		
+
+		std::cout << DONE_MESSAGE << std::endl;
+
 	}
 	else if(command == USER_CMD_TYPE_6)
 	{
 		std::string target_id_argument,target_id,garbage_string;
 		S >> target_id_argument >> target_id >> garbage_string; 
-		if(target_id_argument != CMD_ARGUMENT_1)
+		if(target_id_argument != CMD_ARGUMENT_1 || target_id == "")
 			throw ArgumentException(ERROR_1);
 		if(stoi(target_id) <= 0)
 			throw ArgumentException(ERROR_1);
 		if(garbage_string != "")
 			throw ArgumentException(ERROR_1);
+
+		if((*current_user)->get_Id() == target_id)
+			throw AcessibilityException(ERROR_3);
 
 		Connect_Two_User(users,target_id,current_user);
 		std::cout << DONE_MESSAGE << std::endl;
@@ -102,7 +112,9 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		std::string opr ,inp;
 		for(int i=0 ; i<6 ; i++)
 		{
-			S >> opr >> inp;
+			S >> opr >> inp ;
+			if(inp == "")
+				throw ArgumentException(ERROR_1);
 			if(opr == "course_id" && !arg_1_entered)
 			{
 				course_id = inp;
@@ -135,6 +147,8 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 			}	
 			else
 				throw ArgumentException(ERROR_1);
+			inp = "";
+			inp = "";
 		}
 		S >> garbage_string;
 		if(garbage_string != "")
@@ -142,7 +156,7 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 
 		int capacity = std::stoi(capacity_str);
 
-		if(capacity <=0 || std::stoi(class_number) <=0)
+		if(capacity <=0 || std::stoi(class_number) <=0 || std::stoi(course_id) <=0 || std::stoi(professor_id) <=0)
 			throw ArgumentException(ERROR_1);
 
 		Unit *unit = Specify_Unit(units,course_id);
@@ -164,7 +178,7 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		courses.push_back(new_course);
 		professor->Add_New_Course(new_course);
 
-		Send_New_Course_Notification(users,professor_id,professor->get_Name(),NOTIFICATION_2);
+		Send_Public_Notification(users,professor_id,professor->get_Name(),NOTIFICATION_2);
 
 		std::cout << DONE_MESSAGE << std::endl;
 
@@ -197,6 +211,7 @@ void Post::Connect_Two_User(std::vector<User*> &users , std::string target_id ,U
 		{
 			id_validation = true;
 			users[i]->Connect(*current_user);
+			(*current_user)->Connect(users[i]);
 			break;
 		}
 	}
@@ -276,7 +291,7 @@ void Post::Text_Reader(std::string cmd_line,std::string &opr1,std::string &opr2,
 }
 
 
-void Post::Send_New_Course_Notification(std::vector<User*> users,std::string id,std::string name,std::string notice_text)
+void Post::Send_Public_Notification(std::vector<User*> users,std::string id,std::string name,std::string notice_text)
 {
 	Notification *new_notif = new Notification{id,name,notice_text};
 	for(int i=1 ; i<users.size() ; i++)

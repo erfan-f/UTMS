@@ -185,3 +185,9 @@ void User::Delete_Post(std::string post_id)
 	if(!id_validation)
 		throw AvailabilityException(ERROR_2);
 }
+
+
+std::string User::get_Id()
+{
+	return id;
+}

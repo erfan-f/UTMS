@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-enum day_of_week 
+enum Week 
 {
     Saturday,Sunday,Monday,Tuesday,Wednesday
 };
@@ -15,17 +15,19 @@ class Class_Time
 {
 public:
     Class_Time();
-    Class_Time(std::string day_of_week , int s , int e);
-    bool is_Interrupt_Time(std::string day_of_week , int start_time , int end_time);
+    Class_Time(Week day_of_week , int s , int e);
+    bool is_Interrupt_Time(Week day_of_week , int start_time , int end_time);
     void Print();
-    std::string get_Day();
+    Week get_Day();
     int get_Start();
     int get_End();
+    std::string Day_To_String(Week day);
+
 
 private:
     int start;
     int end;
-    std::string day;
+    Week day;
 };
 
 #endif

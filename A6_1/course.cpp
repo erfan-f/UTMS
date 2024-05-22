@@ -20,28 +20,25 @@ Course::Course(std::string i,std::string n , std::string p_n , int cap ,std::vec
     exam_date = new Date(std::stoi(day),std::stoi(month),std::stoi(year));
 
     std::stringstream S2(t);
-    std::string day_of_week,start_time,end_time;
+    std::string day_of_week_str,start_time_str,end_time_str;
 
-    getline(S2,day_of_week,DAY_TIME_SEPRATOR);
-    getline(S2,start_time,START_END_SEPRATOR);
-    getline(S2,end_time,START_END_SEPRATOR);
+    getline(S2,day_of_week_str,DAY_TIME_SEPRATOR);
+    getline(S2,start_time_str,START_END_SEPRATOR);
+    getline(S2,end_time_str,START_END_SEPRATOR);
 
-    class_time = new Class_Time(day_of_week,std::stoi(start_time),std::stoi(end_time));
+    Week day_of_week = Specify_Day_Of_Week(day_of_week_str);
+    int start_time = stoi(start_time_str);
+    int end_time = stoi(end_time_str);
 
-}
 
-bool Course::is_Interrupt_Course(std::string time)
-{
-    std::stringstream S(time);
-    std::string day_of_week,start_time,end_time;
+    if((start_time < 1 && start_time > 24) || (end_time < 1 && end_time > 24))
+        throw ArgumentException(ERROR_1);
+    
+    if(end_time <= start_time)
+        throw ArgumentException(ERROR_1);
 
-    getline(S,day_of_week,DAY_TIME_SEPRATOR);
-    getline(S,start_time,START_END_SEPRATOR);
-    getline(S,end_time,START_END_SEPRATOR);
+    class_time = new Class_Time(day_of_week,start_time,end_time);
 
-    if(class_time->is_Interrupt_Time(day_of_week,std::stoi(start_time),std::stoi(end_time)))
-        return true;
-    return false;
 }
 
 bool Course::is_Valid_Id(std::string course_id)
@@ -94,7 +91,7 @@ bool Course::is_Interrupted(Course *course)
         return true;
     }
 
-    std::string day_of_week;
+    Week day_of_week;
     int start_time,end_time;
     day_of_week = course->class_time->get_Day();
     start_time = course->class_time->get_Start();
@@ -104,4 +101,41 @@ bool Course::is_Interrupted(Course *course)
         return true;
     
     return false;
+}
+
+bool Course::is_Interrupted(std::string time)
+{
+    std::stringstream S(time);
+    std::string day_of_week_str,start_time,end_time;
+
+    getline(S,day_of_week_str,DAY_TIME_SEPRATOR);
+    getline(S,start_time,START_END_SEPRATOR);
+    getline(S,end_time,START_END_SEPRATOR);
+
+    Week day_of_week = Specify_Day_Of_Week(day_of_week_str);
+
+    if(class_time->is_Interrupt_Time(day_of_week,std::stoi(start_time),std::stoi(end_time)))
+        return true;
+    return false;
+}
+
+
+Week Course::Specify_Day_Of_Week(std::string day_of_week_str)
+{
+    Week day_of_week;
+
+    if(day_of_week_str == "Saturday")
+        day_of_week = Saturday;
+    else if(day_of_week_str == "Sunday")
+        day_of_week = Sunday;
+    else if(day_of_week_str == "Monday")
+        day_of_week = Monday;
+    else if(day_of_week_str == "Tuesday")
+        day_of_week = Tuesday;
+    else if(day_of_week_str == "Wednesday")
+        day_of_week = Wednesday;
+    else
+        throw ArgumentException(ERROR_1);
+
+    return day_of_week;
 }

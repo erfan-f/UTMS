@@ -52,6 +52,7 @@ bool Student::is_Allowed_to_Take(Course* new_course)
 			return false;
 	}
 
+	Send_Notification(NOTIFICATION_3);
 	courses.push_back(new_course);
 
 	return true;
@@ -67,6 +68,7 @@ void Student::Delete_Course(std::string course_id)
 			id_validation = true;
 			delete courses[i];
 			courses.erase(courses.begin() + i);
+			Send_Notification(NOTIFICATION_4);
 			break;
 		}
 	}

@@ -3,7 +3,7 @@
 SystemController::SystemController()
 {
 	users.push_back(new SystemOperator(OPERATOR_NAME,OPERATOR_ID,OPERATOR_PASSWORD));
-	 
+
 	methods.push_back(new Post(METHOD_1,{USER_CMD_TYPE_1,USER_CMD_TYPE_2,USER_CMD_TYPE_6,USER_CMD_TYPE_4,USER_CMD_TYPE_8}));
 	methods.push_back(new Get(METHOD_2,{USER_CMD_TYPE_3,USER_CMD_TYPE_5,USER_CMD_TYPE_4,USER_CMD_TYPE_7,USER_CMD_TYPE_9}));
 	methods.push_back(new Put(METHOD_3,{USER_CMD_TYPE_9}));
@@ -28,7 +28,7 @@ void SystemController::Read_Majors(std::string file_path)
 		getline(S,id,SEPRATOR);
 		getline(S,name,SEPRATOR);
 
-		Add_Major(id,name);
+		Add_Major(name,id);
 	}
 
 }
@@ -197,6 +197,7 @@ Method* SystemController::Specify_Method(std::string method_type)
 
 std::string SystemController::Specify_Major(std::string id)
 {
+
 	std::string major;
 	for(int i=0 ; i<majors.size() ; i++)
 	{
@@ -209,4 +210,11 @@ std::string SystemController::Specify_Major(std::string id)
 	return major;
 }
 
-
+void SystemController::Connect_To_All_User()
+{
+	for(int i=1 ; i<users.size() ; i++)
+	{
+		users[i]->Connect(users[0]);
+		users[0]->Connect(users[i]);
+	}
+}

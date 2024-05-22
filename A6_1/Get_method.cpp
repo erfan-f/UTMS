@@ -21,7 +21,7 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		}
 		else
 		{
-			if(id_argument != CMD_ARGUMENT_1)
+			if(id_argument != CMD_ARGUMENT_1 || id == "")
 				throw ArgumentException(ERROR_1);
 			if(std::stoi(id) <= 0)
 				throw ArgumentException(ERROR_1);
@@ -64,7 +64,7 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 	{
 		std::string id_argument,id,garbage_string;
 		S >> id_argument >> id >> garbage_string;
-		if(id_argument != CMD_ARGUMENT_1)
+		if(id_argument != CMD_ARGUMENT_1 || id == "")
 			throw ArgumentException(ERROR_1);
 		if(std::stoi(id) < 0)
 			throw ArgumentException(ERROR_1);
@@ -125,7 +125,7 @@ void Get::Print_Course(std::vector<Course*> courses , std::string course_id)
 		}
 	}
 	if(!id_validation)
-		throw CommandException(ERROR_2);
+		throw AvailabilityException(ERROR_2);
 	
 	target_course->Print_All_Info();
 }
@@ -145,7 +145,7 @@ void Get::Print_Personal_Page(std::vector<User*> &users,std::string user_id)
 		}
 	}
 	if(!id_validation)
-		throw CommandException(ERROR_2);
+		throw AvailabilityException(ERROR_2);
 
 	user->Print_Page_Info();
 }
@@ -164,7 +164,7 @@ void Get::Print_User_Posts(std::vector<User*> &users,std::string user_id,std::st
 		}
 	}
 	if(!id_validation)
-		throw CommandException(ERROR_2);
+		throw AvailabilityException(ERROR_2);
 	
 	user->Print_Post(post_id);
 }

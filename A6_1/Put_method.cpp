@@ -19,7 +19,7 @@ void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
         std::string id_argument,id,garbage_string;
         S >> id_argument >> id >> garbage_string;
 
-        if(id != CMD_ARGUMENT_1)
+        if(id_argument != CMD_ARGUMENT_1 || id == "")
             throw ArgumentException(ERROR_1);
         if(stoi(id) <= 0)
             throw ArgumentException(ERROR_1);
@@ -35,6 +35,8 @@ void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 
         if(!student->is_Allowed_to_Take(target_course))
             throw AcessibilityException(ERROR_3);
+
+        
         
         std::cout << DONE_MESSAGE << std::endl;
     }

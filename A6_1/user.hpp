@@ -40,6 +40,7 @@ public:
 	std::string get_Type();
 	std::string get_Major_Id();
 	std::string get_Name();
+	std::string get_Id();
 	void Sort_Posts();
 	void Print_Post(std::string post_id);
 	void Send_Notification(std::string notice_text);

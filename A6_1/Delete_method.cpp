@@ -17,7 +17,7 @@ void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std:
 
         S >> id_operator >> id >> garbage_string;
         
-        if(id_operator != CMD_ARGUMENT_1)
+        if(id_operator != CMD_ARGUMENT_1 || id == "")
             throw ArgumentException(ERROR_1);
 
         if(std::stoi(id) <= 0)
@@ -35,7 +35,7 @@ void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std:
 
         S >> id_operator >> id >> garbage_string;
         
-        if(id_operator != CMD_ARGUMENT_1)
+        if(id_operator != CMD_ARGUMENT_1 || id == "")
             throw ArgumentException(ERROR_1);
 
         if(std::stoi(id) <= 0)

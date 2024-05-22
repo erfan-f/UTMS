@@ -26,7 +26,7 @@ bool Professor::is_Free(std::string time)
 {
 	for(int i=0 ; i<courses.size() ; i++)
 	{
-		if(courses[i]->is_Interrupt_Course(time))
+		if(courses[i]->is_Interrupted(time))
 			return false;
 	}
 	return true;
@@ -41,9 +41,9 @@ void Professor::Print_Info()
 		std::cout << courses[i]->get_Name();
 		if(i != courses.size() - 1)
 			std::cout << ",";
-		else
-			std::cout << std::endl;
 	}
+
+	std::cout << std::endl;
 
 }
 

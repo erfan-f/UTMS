@@ -1,6 +1,7 @@
 #ifndef MAJOR
 #define MAJOR
 
+#include <iostream>
 #include <string>
 
 class Major
