@@ -4,7 +4,7 @@
 Put::Put(std::string t , std::vector <std::string> cmds)
 :Method(t,cmds) {}
 
-void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user,bool &user_logged_in)
+void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user)
 {
     std::stringstream S(cmd_line);
 
@@ -16,21 +16,25 @@ void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 
     if(command == USER_CMD_TYPE_9)
     {
-        std::string id_operator,id;
-        S >> id_operator >> id;
+        std::string id_argument,id,garbage_string;
+        S >> id_argument >> id >> garbage_string;
 
+        if(id != CMD_ARGUMENT_1)
+            throw ArgumentException(ERROR_1);
         if(stoi(id) <= 0)
-            throw CommandException(ERROR_1);
+            throw ArgumentException(ERROR_1);
+        if(garbage_string != "")
+            throw ArgumentException(ERROR_1);
 
         Course *target_course;
         target_course = Take_A_Course(courses,id);
 
         Student *student = dynamic_cast<Student*>(*current_user);
         if(student == NULL)
-            throw CommandException(ERROR_3);
+            throw AcessibilityException(ERROR_3);
 
         if(!student->is_Allowed_to_Take(target_course))
-            throw CommandException(ERROR_3);
+            throw AcessibilityException(ERROR_3);
         
         std::cout << DONE_MESSAGE << std::endl;
     }
@@ -51,7 +55,7 @@ Course* Put::Take_A_Course(std::vector<Course*> courses,std::string course_id)
         }
     }
     if(!id_validation)
-        throw CommandException(ERROR_2);
+        throw AvailabilityException(ERROR_2);
 
     return course;
 }

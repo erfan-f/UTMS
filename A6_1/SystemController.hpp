@@ -15,8 +15,8 @@
 #include "messages.hpp"
 #include "SystemOperator.hpp"
 #include "course.hpp"
-#include "post_method.hpp"
-#include "get_method.hpp"
+#include "Post_method.hpp"
+#include "Get_method.hpp"
 #include "Put_method.hpp"
 #include "Delete_method.hpp"
 
@@ -34,7 +34,7 @@ const std::string METHOD_2 = "GET";
 const std::string METHOD_3 = "PUT";
 const std::string METHOD_4 = "DELETE";
 
-const std::string ARGUMANT = "?";
+const std::string OPERATOR_ARGUMANT = "?";
 
 
 
@@ -61,7 +61,6 @@ private:
 	std::vector<Course*> courses;
 	std::vector<Method*> methods;
 	std::vector<std::string> user_cmds;
-	bool user_logged_in;
 	User *current_user;
 };
 

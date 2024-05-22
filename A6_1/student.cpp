@@ -71,14 +71,14 @@ void Student::Delete_Course(std::string course_id)
 		}
 	}
 	if(!id_validation)
-		throw CommandException(ERROR_2);
+		throw AvailabilityException(ERROR_2);
 }
 
 
 void Student::Print_Courses()
 {
 	if(courses.size() == 0)
-		throw CommandException(ERROR_4);
+		throw AvailabilityException(ERROR_4);
 	for(int i=0 ; i<courses.size() ; i++)
 	{
 		courses[i]->Print_All_Info();

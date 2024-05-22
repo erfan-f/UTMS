@@ -4,8 +4,6 @@ SystemController::SystemController()
 {
 	users.push_back(new SystemOperator(OPERATOR_NAME,OPERATOR_ID,OPERATOR_PASSWORD));
 	 
-	user_logged_in  = false;
-
 	methods.push_back(new Post(METHOD_1,{USER_CMD_TYPE_1,USER_CMD_TYPE_2,USER_CMD_TYPE_6,USER_CMD_TYPE_4,USER_CMD_TYPE_8}));
 	methods.push_back(new Get(METHOD_2,{USER_CMD_TYPE_3,USER_CMD_TYPE_5,USER_CMD_TYPE_4,USER_CMD_TYPE_7,USER_CMD_TYPE_9}));
 	methods.push_back(new Put(METHOD_3,{USER_CMD_TYPE_9}));
@@ -161,26 +159,28 @@ void SystemController::Handle_Cmd(std::string cmd_line)
 	{
 		throw CommandException(ERROR_2);
 	}
-	if(operator_argument != ARGUMANT)
+	if(operator_argument != OPERATOR_ARGUMANT)
 		throw CommandException(ERROR_1);
 
-	if(command == USER_CMD_TYPE_1 && user_logged_in)
-		throw CommandException(ERROR_3);
-	else if(command != USER_CMD_TYPE_1 && !user_logged_in)
-		throw CommandException(ERROR_3);
-
-	if(current_user != NULL)
+	if(command == USER_CMD_TYPE_1 )
 	{
-		if(current_user->Permision_Check(command))
-			method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user,user_logged_in);
-		else
-		{
-			throw CommandException(ERROR_3);
-		}
+		if(current_user != NULL)
+			throw AcessibilityException(ERROR_3);
+
+		method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user);
+
 	}
 	else
-		method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user,user_logged_in);
-
+	{
+		if(current_user == NULL)
+			throw AcessibilityException(ERROR_3);
+		
+		if(current_user->Permision_Check(command))
+			method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user);
+		else	
+			throw AcessibilityException(ERROR_3);
+	}
+	
 }
 
 Method* SystemController::Specify_Method(std::string method_type)

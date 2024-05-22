@@ -25,8 +25,11 @@ class User
 public:
 	User(std::string n,std::string i,std::string p);
 	User(std::string n,std::string i,std::string m,std::string m_i,std::string p);
+	bool is_Logged_In();
 	virtual bool is_Valid_Id (std::string i);
 	bool is_Valid_Password(std::string p);
+	void Login();
+	void Logout();
 	bool is_Professor();
 	bool is_Student();
 	void Add_Post(UT_Post *post);

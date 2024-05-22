@@ -20,6 +20,11 @@ User::User(std::string n,std::string i,std::string m,std::string m_i,std::string
 	num_of_posts_history = 0;
 }
 
+bool User::is_Logged_In()
+{
+	return logged_in;
+}
+
 bool User::is_Valid_Id(std::string i)
 {
 	if(id == i)
@@ -32,6 +37,16 @@ bool User::is_Valid_Password(std::string p)
 	if(password == p)
 		return true;
 	return false;
+}
+
+void User::Login()
+{
+	logged_in = true;
+}
+
+void User::Logout()
+{
+	logged_in =false;
 }
 
 void User::Add_Post(UT_Post *post)
@@ -47,7 +62,7 @@ void User::Connect(User *target)
 	for(int i=0 ; i<connection_list.size() ; i++)
 	{
 		if(connection_list[i] == target)
-			throw CommandException(ERROR_1);
+			throw AvailabilityException(ERROR_1);
 	}
 	connection_list.push_back(target);
 }
@@ -124,7 +139,7 @@ void User::Print_Post(std::string post_id)
 		}
 	}
 	if(!id_validation)
-		throw CommandException(ERROR_2);
+		throw AvailabilityException(ERROR_2);
 	this->Print_Info();
 	std::cout << post->id << " " << post->title << " " << post->message << std::endl;
 }
@@ -146,7 +161,7 @@ void User::Recieve_Notification(Notification* notif)
 void User::Print_Notifications()
 {
 	if(notifications.size() == 0)
-		throw CommandException(ERROR_4);
+		throw AvailabilityException(ERROR_4);
 	for(int i= notifications.size() - 1 ; i>=0 ; i--)
 	{
 		std::cout << notifications[i]->user_id << " " << notifications[i]->name << ": " << notifications[i]->notice << std::endl;
@@ -168,5 +183,5 @@ void User::Delete_Post(std::string post_id)
 		}
 	}
 	if(!id_validation)
-		throw CommandException(ERROR_2);
+		throw AvailabilityException(ERROR_2);
 }

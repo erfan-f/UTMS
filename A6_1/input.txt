@@ -1,20 +1,9 @@
 POST login ? id 0 password UT_account
-POST course_offer ? course_id 1 professor_id 810420432 capacity 100 time Sunday:12-14 exam_date 1403/4/4 class_number 2
-POST course_offer ? course_id 2 professor_id 810100200 capacity 50 time Sunday:10-12 exam_date 1403/4/5 class_number 1
+POST course_offer ? course_id 1 professor_id 810420432 capacity 100 time Sunday:12-14 exam_date 1403/4/4 class_number 2 
+POST course_offer ? course_id 2 professor_id 810100200 capacity 50 time Sunday:10-12 exam_date 1403/4/5 class_number 1 
 POST logout ?
 POST login ? password ImtheproblemItsme id 810102612
 POST connect ? id 810420432
 POST logout ?
 POST login ? id 810420432  password 1330
-POST post ? title "title 1" message "Hello my dear dear firend!"
-POST post ? title "title 2" message "Goodbye!"
-POST post ? title "title 3" message "whaaaaaaaaat!"
-DELETE post ? id 2
-POST logout ?
-POST login ? password ImtheproblemItsme id 810102612
-GET my_courses ? 
-PUT my_courses ? id 2
-PUT my_courses ? id 1
-DELETE my_courses ? id 2
-DELETE my_courses ? id 1
-GET my_courses ? 
+POST post ? message "Hello my dear dear firend!"   title "title 1"

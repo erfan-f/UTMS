@@ -1,0 +1,4 @@
+POST login ? password 1330 id 810420432 
+POST logout ? 
+POST login ? id 810102612  password ImtheproblemItsme  
+GET my_courses ?

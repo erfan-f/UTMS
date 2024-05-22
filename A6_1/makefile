@@ -1,5 +1,5 @@
-utms: main.o SystemController.o SystemOperator.o user.o student.o professor.o  major.o unit.o course.o date.o class_time.o CommandOperator.o exception.o method.o post_method.o get_method.o Put_method.o Delete_method.o
-	g++ -std=c++20 main.o SystemController.o SystemOperator.o user.o student.o professor.o  major.o unit.o course.o date.o class_time.o CommandOperator.o exception.o method.o post_method.o get_method.o  Put_method.o Delete_method.o -o utms.out
+utms: main.o SystemController.o SystemOperator.o user.o student.o professor.o  major.o unit.o course.o date.o class_time.o CommandOperator.o exception.o method.o Post_method.o Get_method.o Put_method.o Delete_method.o
+	g++ -std=c++20 main.o SystemController.o SystemOperator.o user.o student.o professor.o  major.o unit.o course.o date.o class_time.o CommandOperator.o exception.o method.o Post_method.o Get_method.o  Put_method.o Delete_method.o -o utms.out
 
 main.o: main.cpp
 	g++ -std=c++20 -c main.cpp
@@ -43,11 +43,11 @@ exception.o: exception.cpp
 method.o: method.cpp
 	g++ -std=c++20 -c method.cpp
 
-post_method.o: post_method.cpp
-	g++ -std=c++20 -c post_method.cpp
+Post_method.o: Post_method.cpp
+	g++ -std=c++20 -c Post_method.cpp
 
-get_method.o: get_method.cpp
-	g++ -std=c++20 -c get_method.cpp
+Get_method.o: Get_method.cpp
+	g++ -std=c++20 -c Get_method.cpp
 
 Put_method.o: Put_method.cpp
 	g++ -std=c++20 -c Put_method.cpp
