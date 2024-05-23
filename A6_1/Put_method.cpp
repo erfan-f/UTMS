@@ -4,7 +4,7 @@
 Put::Put(std::string t , std::vector <std::string> cmds)
 :Method(t,cmds) {}
 
-void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user)
+void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user,std::vector<std::string> &response)
 {
     std::stringstream S(cmd_line);
 
@@ -37,8 +37,9 @@ void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
             throw AcessibilityException(ERROR_3);
 
         
-        
-        std::cout << DONE_MESSAGE << std::endl;
+        std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
     }
 
 }

@@ -142,7 +142,7 @@ void SystemController::Add_Student(std::string name,std::string id,std::string m
 	users.push_back(s);
 }
 
-void SystemController::Handle_Cmd(std::string cmd_line)
+void SystemController::Handle_Cmd(std::string cmd_line,std::vector<std::string> &response)
 {
 	std::stringstream S(cmd_line);
 
@@ -167,7 +167,7 @@ void SystemController::Handle_Cmd(std::string cmd_line)
 		if(current_user != NULL)
 			throw AcessibilityException(ERROR_3);
 
-		method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user);
+		method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user,response);
 
 	}
 	else
@@ -176,7 +176,7 @@ void SystemController::Handle_Cmd(std::string cmd_line)
 			throw AcessibilityException(ERROR_3);
 		
 		if(current_user->Permision_Check(command))
-			method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user);
+			method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user,response);
 		else	
 			throw AcessibilityException(ERROR_3);
 	}

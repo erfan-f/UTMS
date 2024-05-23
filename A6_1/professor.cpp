@@ -33,30 +33,36 @@ bool Professor::is_Free(std::string time)
 }
 
 
-void Professor::Print_Info()
+std::string Professor::get_Info()
 {
-	std::cout << name << " " << major << " " << position << " ";
+	std::ostringstream S;
+	S << name << " " << major << " " << position << " ";
 	for(int i=0 ; i<courses.size() ; i++)
 	{
-		std::cout << courses[i]->get_Name();
+		S << courses[i]->get_Name();
 		if(i != courses.size() - 1)
-			std::cout << ",";
+			S << ",";
 	}
 
-	std::cout << std::endl;
+	S << std::endl;
 
+	return S.str();
 }
 
-void Professor::Print_Page_Info()
+std::string Professor::get_Page_Info()
 {
-	Print_Info();
+	std::ostringstream S;
+
+	S << get_Info();
 	
 	Sort_Posts();
 
 	for(int j=0 ; j<posts.size() ; j++)
 	{
-		std::cout <<  posts[j]->id << " " << posts[j]->title << std::endl;
+		S <<  posts[j]->id << " " << posts[j]->title << std::endl;
 	}	
+	
+	return S.str();
 }
 
 

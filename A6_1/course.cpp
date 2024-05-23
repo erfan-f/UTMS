@@ -65,18 +65,23 @@ bool Course::is_Valid_Major(std::string id)
     return false;
 }
 
-void Course::Print_Info()
+std::string Course::get_Info()
 {
-    std::cout << id << " " << name << " " <<  capacity << " " << professor_name << std::endl;
+    std::ostringstream S;
+    S << id << " " << name << " " << capacity << " " << professor_name << std::endl;
+    return S.str();
 }
 
-void Course::Print_All_Info()
+std::string Course::get_All_Info()
 {
-    std::cout << id << " " << name << " " <<  capacity << " " << professor_name << " ";
-    class_time->Print();
-    std::cout << " ";
-    exam_date->Print();
-    std::cout << " " << class_number << std::endl;
+    std::ostringstream S;
+    std::string class_time_str,date_str;
+    class_time_str = class_time->get_Time();
+    date_str = exam_date->get_Date();
+    S << id << " " << name << " " << capacity << " " << professor_name << " "
+        << class_time_str << " " << date_str << " " << class_number << std::endl;
+
+    return S.str();
 }
 
 std::string Course::get_Name()

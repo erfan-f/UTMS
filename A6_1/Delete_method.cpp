@@ -3,7 +3,7 @@
 Delete::Delete(std::string t , std::vector <std::string> cmds)
 :Method(t,cmds) {}
 
-void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user)
+void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user,std::vector<std::string> &response)
 {
     std::stringstream S(cmd_line);
 
@@ -27,7 +27,10 @@ void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std:
             throw ArgumentException(ERROR_1);
 
         (*current_user)->Delete_Post(id);
-        std::cout << DONE_MESSAGE << std::endl;
+        
+        std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
     }
     else if(command == USER_CMD_TYPE_9)
     {
@@ -49,7 +52,10 @@ void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std:
             throw AcessibilityException(ERROR_3);
             
         student->Delete_Course(id);
-        std::cout << DONE_MESSAGE << std::endl;
+
+        std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
     }
 }
 

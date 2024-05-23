@@ -28,7 +28,14 @@ bool Class_Time::is_Interrupt_Time(Week day_of_week , int start_time , int end_t
 
 void Class_Time::Print()
 {
-    std::cout << Day_To_String(day) << DAY_TIME_SEPRATOR << start << START_END_SEPRATOR << end;
+   std::cout << Day_To_String(day) << DAY_TIME_SEPRATOR << start << START_END_SEPRATOR << end;
+}
+
+std::string Class_Time::get_Time()
+{
+    std::ostringstream S;
+    S << Day_To_String(day) << DAY_TIME_SEPRATOR << start << START_END_SEPRATOR << end;
+    return S.str();
 }
 
 Week Class_Time::get_Day()

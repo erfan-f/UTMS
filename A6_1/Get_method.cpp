@@ -3,7 +3,7 @@
 Get::Get(std::string t , std::vector <std::string> cmds)
 :Method(t,cmds) {}
 
-void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user)
+void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::vector<Unit*> &units ,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user,std::vector<std::string> &response)
 {
 	std::stringstream S(cmd_line);
 
@@ -17,7 +17,7 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		S >> id_argument >> id >> garbage_string;
 		if(id_argument == "")
 		{
-			Print_All_Courses(courses);
+			get_All_Courses_Info(courses,response);
 		}
 		else
 		{
@@ -28,7 +28,7 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 			if(garbage_string != "")
 				throw ArgumentException(ERROR_1);
 
-			Print_Course(courses,id);
+			get_Course_Info(courses,id,response);
 		}
 	}
 	else if(command == USER_CMD_TYPE_4)
@@ -58,7 +58,7 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		if(garbage_string != "")
 			throw ArgumentException(ERROR_1);
 
-		Print_User_Posts(users,id,post_id);
+		get_User_Post(users,id,post_id,response);
 	}
 	else if(command == USER_CMD_TYPE_5)
 	{
@@ -71,7 +71,7 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		if(garbage_string != "")
 			throw ArgumentException(ERROR_1);
 
-		Print_Personal_Page(users,id);
+		get_Personal_Page(users,id,response);
 	}
 	else if(command == USER_CMD_TYPE_7)
 	{
@@ -81,7 +81,7 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		if(argument_str != "")
 			throw ArgumentException(ERROR_1);
 		
-		(*current_user)->Print_Notifications();
+		response.push_back((*current_user)->get_Notifications());
 	}
 	else if(command == USER_CMD_TYPE_9)
 	{
@@ -94,24 +94,24 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		if(student == NULL)
             throw AcessibilityException(ERROR_3);
 
-		student->Print_Courses();
+		response.push_back(student->get_Courses_Info());
 	}
 }
 
 
-void Get::Print_All_Courses(std::vector<Course*> courses)
+void Get::get_All_Courses_Info(std::vector<Course*> courses , std::vector<std::string> &response)
 {	
 	if(courses.size() == 0)
 		throw CommandException(ERROR_4);
 
 	for(int i=0 ; i<courses.size(); i++)
 	{
-		courses[i]->Print_Info();
+		response.push_back(courses[i]->get_Info());
 	}
 	
 }
 
-void Get::Print_Course(std::vector<Course*> courses , std::string course_id)
+void Get::get_Course_Info(std::vector<Course*> courses , std::string course_id,std::vector<std::string> &response)
 {
 	Course *target_course;
 	bool id_validation = false;
@@ -127,11 +127,11 @@ void Get::Print_Course(std::vector<Course*> courses , std::string course_id)
 	if(!id_validation)
 		throw AvailabilityException(ERROR_2);
 	
-	target_course->Print_All_Info();
+	response.push_back(target_course->get_All_Info());
 }
 
 
-void Get::Print_Personal_Page(std::vector<User*> &users,std::string user_id)
+void Get::get_Personal_Page(std::vector<User*> &users,std::string user_id,std::vector<std::string> &response)
 {
 	User *user;
 	bool id_validation = false;
@@ -147,10 +147,10 @@ void Get::Print_Personal_Page(std::vector<User*> &users,std::string user_id)
 	if(!id_validation)
 		throw AvailabilityException(ERROR_2);
 
-	user->Print_Page_Info();
+	response.push_back(user->get_Page_Info());
 }
 
-void Get::Print_User_Posts(std::vector<User*> &users,std::string user_id,std::string post_id)
+void Get::get_User_Post(std::vector<User*> &users,std::string user_id,std::string post_id,std::vector<std::string> &response)
 {
 	User *user;
 	bool id_validation = false;
@@ -166,5 +166,5 @@ void Get::Print_User_Posts(std::vector<User*> &users,std::string user_id,std::st
 	if(!id_validation)
 		throw AvailabilityException(ERROR_2);
 	
-	user->Print_Post(post_id);
+	response.push_back(user->get_Post(post_id));
 }

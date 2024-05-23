@@ -2,6 +2,7 @@
 #define CLASS_TIME
 
 #include <iostream>
+#include <sstream>
 
 enum Week 
 {
@@ -18,6 +19,7 @@ public:
     Class_Time(Week day_of_week , int s , int e);
     bool is_Interrupt_Time(Week day_of_week , int start_time , int end_time);
     void Print();
+    std::string get_Time();
     Week get_Day();
     int get_Start();
     int get_End();

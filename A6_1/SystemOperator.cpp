@@ -12,18 +12,22 @@ SystemOperator::SystemOperator(std::string n , std::string i , std::string pass)
 
 }
 
-void SystemOperator::Print_Info()
-{
-	std::cout << "UT_account" << std::endl;
+std::string SystemOperator::get_Info()
+{	
+	std::ostringstream S;
+	S << "UT_account" << std::endl;
+	return S.str();
 }
 
-void SystemOperator::Print_Page_Info()
+std::string SystemOperator::get_Page_Info()
 {
-	Print_Info();
+	std::ostringstream S;
+	S << get_Info();
 	
 	Sort_Posts();
 	for(int j=0 ; j<posts.size() ; j++)
 	{
-		std::cout <<  posts[j]->id << " " << posts[j]->title << std::endl;
+		S <<  posts[j]->id << " " << posts[j]->title << std::endl;
 	}
+	return S.str();
 }

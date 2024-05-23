@@ -4,7 +4,7 @@ Post::Post(std::string t , std::vector <std::string> cmds)
 :Method(t,cmds){}
 
 
-void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vector<Unit*> &units,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user)
+void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vector<Unit*> &units,std::vector<User*> &users ,std::vector<Course*> &courses, User **current_user,std::vector<std::string> &response)
 {
 	std::stringstream S(cmd_line);
 
@@ -39,7 +39,10 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		else
 			throw ArgumentException(ERROR_1);
 		*current_user = User_Login(users,id,password);
-		std::cout << DONE_MESSAGE << std::endl;
+		
+		std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
 	}
 	else if(command == USER_CMD_TYPE_2)
 	{
@@ -49,7 +52,10 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 			throw ArgumentException(ERROR_1);
 		(*current_user)->Logout();
 		*current_user = NULL;
-		std::cout << DONE_MESSAGE << std::endl;
+
+		std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
 	}
 	else if(command == USER_CMD_TYPE_4)
 	{
@@ -76,10 +82,9 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		UT_Post *p = new UT_Post{"",title,message};
 		(*current_user)->Add_Post(p);
 
-		
-
-		std::cout << DONE_MESSAGE << std::endl;
-
+		std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
 	}
 	else if(command == USER_CMD_TYPE_6)
 	{
@@ -96,7 +101,9 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 			throw AcessibilityException(ERROR_3);
 
 		Connect_Two_User(users,target_id,current_user);
-		std::cout << DONE_MESSAGE << std::endl;
+		std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
 	}
 	else if(command == USER_CMD_TYPE_8)
 	{
@@ -180,8 +187,9 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 
 		Send_Public_Notification(users,professor_id,professor->get_Name(),NOTIFICATION_2);
 
-		std::cout << DONE_MESSAGE << std::endl;
-
+		std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
 	}
 }
 

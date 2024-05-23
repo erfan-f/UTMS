@@ -16,27 +16,32 @@ Student::Student(std::string n,std::string i,std::string m,std::string m_i,std::
 	valid_cmds.push_back(USER_CMD_TYPE_9);
 }
 
-void Student::Print_Info()
+std::string Student::get_Info()
 {
-	std::cout << name << " " << major << " " << semester << " ";
+	std::ostringstream S;
+	S << name << " " << major << " " << semester << " ";
 	for(int i=0 ; i<courses.size() ; i++)
 	{
-		std::cout << courses[i]->get_Name();
+		S << courses[i]->get_Name();
 		if(i != courses.size() - 1)
-			std::cout << ",";
+			S << ",";
 	}
-	std::cout << std::endl;
+	S << std::endl;
+	return S.str();
 }
 
-void Student::Print_Page_Info()
+std::string Student::get_Page_Info()
 {
-	Print_Info();
+	std::ostringstream S;
+
+	S << get_Info();
 	
 	Sort_Posts();
 	for(int j=0 ; j<posts.size() ; j++)
 	{
-		std::cout <<  posts[j]->id << " " << posts[j]->title << std::endl;
+		S <<  posts[j]->id << " " << posts[j]->title << std::endl;
 	}	
+	return S.str();
 }
 
 bool Student::is_Allowed_to_Take(Course* new_course)
@@ -77,12 +82,16 @@ void Student::Delete_Course(std::string course_id)
 }
 
 
-void Student::Print_Courses()
+std::string Student::get_Courses_Info()
 {
+	std::ostringstream S;
+
 	if(courses.size() == 0)
 		throw AvailabilityException(ERROR_4);
+
 	for(int i=0 ; i<courses.size() ; i++)
 	{
-		courses[i]->Print_All_Info();
+		S << courses[i]->get_All_Info();
 	}
+	return S.str();
 }

@@ -124,8 +124,9 @@ void User::Sort_Posts()
 	}
 }
 
-void User::Print_Post(std::string post_id)
+std::string User::get_Post(std::string post_id)
 {
+	std::ostringstream S;
 	UT_Post *post;
 	bool id_validation = false;
 
@@ -140,8 +141,9 @@ void User::Print_Post(std::string post_id)
 	}
 	if(!id_validation)
 		throw AvailabilityException(ERROR_2);
-	this->Print_Info();
-	std::cout << post->id << " " << post->title << " " << post->message << std::endl;
+	S << this->get_Info();
+	S << post->id << " " << post->title << " " << post->message << std::endl;
+	return S.str();
 }
 
 void User::Send_Notification(std::string notice_text)
@@ -158,15 +160,19 @@ void User::Recieve_Notification(Notification* notif)
 	notifications.push_back(notif);
 }
 
-void User::Print_Notifications()
+std::string User::get_Notifications()
 {
+	std::ostringstream S;
+
 	if(notifications.size() == 0)
 		throw AvailabilityException(ERROR_4);
+
 	for(int i= notifications.size() - 1 ; i>=0 ; i--)
 	{
-		std::cout << notifications[i]->user_id << " " << notifications[i]->name << ": " << notifications[i]->notice << std::endl;
+		S << notifications[i]->user_id << " " << notifications[i]->name << ": " << notifications[i]->notice << std::endl;
 	}
 	notifications.clear();
+	return S.str();
 }
 
 void User::Delete_Post(std::string post_id)

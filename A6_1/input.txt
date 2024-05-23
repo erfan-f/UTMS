@@ -1,27 +1,14 @@
 POST login ? id 0 password UT_account
 POST post ? title "im the king!" message "sdkmfdsklfm" 
 DELETE post ? id 1
-POST course_offer ? course_id 1 professor_id 810420432 capacity 100 time Sunday:12-14 exam_date 1403/4/4 class_number 2 
-POST course_offer ? course_id 2 professor_id 810100200 capacity 50 time Sunday:10-12 exam_date 1403/4/5 class_number 1 
+POST course_offer ? course_id 1 professor_id 810420432 capacity 100 time Wednesday:12-14 exam_date 1403/4/4 class_number 2 
+POST course_offer ? course_id 2 professor_id 810100200 capacity 50 time Wednesday:10-12 exam_date 1403/4/4 class_number 1 
 POST logout ?
 POST login ? password ImtheproblemItsme id 810102612
 POST connect ? id 810420432
 POST post ? title "ooo" message "Hello Ramtin" 
 POST post ? title "sss" message "Bye Ramtin!" 
 DELETE post ? id 1
-POST post ? title "zzz" message "sfas Ramtin!" 
 PUT my_courses ? id 1
 PUT my_courses ? id 2
-DELETE my_courses ? id 1
-POST logout ? 
-POST login ? id 810420432  password 1330
-POST post ? message "Hello my dear dear firend!"   title "title 1"
-GET notification ?
-GET notification ?
-POST logout ?
-POST login ? password ImtheproblemItsme id 810102612
-DELETE my_courses ? id 2
-POST post ? title "ooossasf" message "Hellosad Ramtin" 
-POST logout ?
-POST login ? id 810420432  password 1330
-GET notification ?
+GET my_courses ? 

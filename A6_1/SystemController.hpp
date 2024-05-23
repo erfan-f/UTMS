@@ -51,7 +51,7 @@ public:
 	void Add_Unit(std::string name,std::string id,int credit,std::string prerequisite,std::vector<std::string> majors_id);
 	void Add_Professor(std::string name,std::string id,std::string major,std::string major_id,std::string position,std::string password);
 	void Add_Student(std::string name,std::string id,std::string major,std::string major_id,std::string semester,std::string password);
-	void Handle_Cmd(std::string cmd_line);
+	void Handle_Cmd(std::string cmd_line,std::vector<std::string> &response);
 	Method* Specify_Method(std::string method_type);
 	std::string Specify_Major(std::string id);
 

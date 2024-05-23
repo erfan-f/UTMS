@@ -15,8 +15,8 @@ class Course
 public:
     Course(std::string i,std::string n , std::string p_n , int cap ,std::vector <std::string> m_i,std::string pre,std::string d, std::string t,std::string c_n);
     bool is_Valid_Id(std::string course_id);
-    void Print_Info();
-    void Print_All_Info();
+    std::string get_Info();
+    std::string get_All_Info();
     std::string get_Name();
     bool is_Interrupted(Course *course);
     bool is_Interrupted(std::string time);

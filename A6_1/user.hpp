@@ -34,18 +34,18 @@ public:
 	bool is_Student();
 	void Add_Post(UT_Post *post);
 	void Connect(User *target);
-	virtual void Print_Info() = 0;
-	virtual void Print_Page_Info() = 0;
+	virtual std::string get_Info() = 0;
+	virtual std::string get_Page_Info() = 0;
 	bool Permision_Check(std::string cmd);
 	std::string get_Type();
 	std::string get_Major_Id();
 	std::string get_Name();
 	std::string get_Id();
 	void Sort_Posts();
-	void Print_Post(std::string post_id);
+	std::string get_Post(std::string post_id);
 	void Send_Notification(std::string notice_text);
 	void Recieve_Notification(Notification* notif);
-	void Print_Notifications();
+	std::string get_Notifications();
 	void Delete_Post(std::string post_id);
 
 protected:	
