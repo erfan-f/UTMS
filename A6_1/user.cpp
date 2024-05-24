@@ -78,19 +78,6 @@ bool User::Permision_Check(std::string cmd)
 }
 
 
-bool User::is_Professor()
-{
-	if(user_type == USER_TYPE_1)
-		return true;
-	return false;
-}
-
-bool User::is_Student()
-{
-	if(user_type == USER_TYPE_2)
-		return true;
-	return false;
-}
 
 std::string User::get_Type()
 {

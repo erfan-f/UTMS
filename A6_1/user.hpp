@@ -30,8 +30,6 @@ public:
 	bool is_Valid_Password(std::string p);
 	void Login();
 	void Logout();
-	bool is_Professor();
-	bool is_Student();
 	void Add_Post(UT_Post *post);
 	void Connect(User *target);
 	virtual std::string get_Info() = 0;

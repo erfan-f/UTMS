@@ -59,7 +59,7 @@ void SystemController::Read_Units(std::string file_path)
 			majors_id.push_back(temp_str);
 		}
 
-		Add_Unit(name,id,std::stoi(credit),prerequisite,majors_id);
+		Add_Unit(name,id,std::stoll(credit),prerequisite,majors_id);
 		majors_id.clear();
 	}
 }

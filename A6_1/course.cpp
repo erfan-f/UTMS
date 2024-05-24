@@ -17,7 +17,7 @@ Course::Course(std::string i,std::string n , std::string p_n , int cap ,std::vec
     getline(S,month,DATE_SEPRATOR);
     getline(S,day,DATE_SEPRATOR);
     
-    exam_date = new Date(std::stoi(day),std::stoi(month),std::stoi(year));
+    exam_date = new Date(std::stoll(day),std::stoll(month),std::stoll(year));
 
     std::stringstream S2(t);
     std::string day_of_week_str,start_time_str,end_time_str;
@@ -27,8 +27,8 @@ Course::Course(std::string i,std::string n , std::string p_n , int cap ,std::vec
     getline(S2,end_time_str,START_END_SEPRATOR);
 
     Week day_of_week = Specify_Day_Of_Week(day_of_week_str);
-    int start_time = stoi(start_time_str);
-    int end_time = stoi(end_time_str);
+    int start_time = stoll(start_time_str);
+    int end_time = stoll(end_time_str);
 
 
     if((start_time < 1 && start_time > 24) || (end_time < 1 && end_time > 24))
@@ -37,7 +37,7 @@ Course::Course(std::string i,std::string n , std::string p_n , int cap ,std::vec
     if(end_time <= start_time)
         throw ArgumentException(ERROR_1);
 
-    class_time = new Class_Time(day_of_week,start_time,end_time);
+    class_time = new Time(day_of_week,start_time,end_time);
 
 }
 
@@ -50,7 +50,7 @@ bool Course::is_Valid_Id(std::string course_id)
 
 bool Course::is_Valid_Semester(std::string semester)
 {
-    if(std::stoi(semester) >= std::stoi(prerequisite))
+    if(std::stoll(semester) >= std::stoll(prerequisite))
         return true;
     return false;
 }
@@ -119,7 +119,7 @@ bool Course::is_Interrupted(std::string time)
 
     Week day_of_week = Specify_Day_Of_Week(day_of_week_str);
 
-    if(class_time->is_Interrupt_Time(day_of_week,std::stoi(start_time),std::stoi(end_time)))
+    if(class_time->is_Interrupt_Time(day_of_week,std::stoll(start_time),std::stoll(end_time)))
         return true;
     return false;
 }

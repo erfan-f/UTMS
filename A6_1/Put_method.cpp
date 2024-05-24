@@ -21,13 +21,17 @@ void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 
         if(id_argument != CMD_ARGUMENT_1 || id == "")
             throw ArgumentException(ERROR_1);
-        if(stoi(id) <= 0)
+
+        if(!is_Number(id))
+            throw ArgumentException(ERROR_1);
+
+        if(stoll(id) <= 0)
             throw ArgumentException(ERROR_1);
         if(garbage_string != "")
             throw ArgumentException(ERROR_1);
 
         Course *target_course;
-        target_course = Take_A_Course(courses,id);
+        target_course = Find_Course(courses,id);
 
         Student *student = dynamic_cast<Student*>(*current_user);
         if(student == NULL)
@@ -42,23 +46,4 @@ void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
         response.push_back(os.str());
     }
 
-}
-
-Course* Put::Take_A_Course(std::vector<Course*> courses,std::string course_id)
-{
-    bool id_validation = false;
-    Course* course;
-    for(int i=0 ; i<courses.size() ; i++)
-    {
-        if(courses[i]->is_Valid_Id(course_id))
-        {
-            id_validation = true;
-            course = courses[i];
-            break;
-        }
-    }
-    if(!id_validation)
-        throw AvailabilityException(ERROR_2);
-
-    return course;
 }

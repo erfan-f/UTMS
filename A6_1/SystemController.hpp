@@ -21,7 +21,7 @@
 #include "Delete_method.hpp"
 
 
-const std::string OPERATOR_NAME = "Operator";
+const std::string OPERATOR_NAME = "admin";
 const std::string OPERATOR_ID = "0";
 const std::string OPERATOR_PASSWORD = "UT_account";
 

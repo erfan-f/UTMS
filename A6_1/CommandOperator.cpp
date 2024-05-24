@@ -16,7 +16,7 @@ void Command_Operator(SystemController &engine)
 			std::cerr << ex.what() << std::endl;
 		}
 		for(int i=0 ; i<response.size() ; i++)
-			std::cout << response[i];
+			std::cout << response[i] ;
 		response.clear();
 	}
 

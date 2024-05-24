@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "class_time.hpp"
+#include "time.hpp"
 #include "date.hpp"
 #include "exception.hpp"
 #include "messages.hpp"
@@ -25,7 +25,6 @@ public:
     Week Specify_Day_Of_Week(std::string day_of_week_str);
 
 
-
 private:
     std::string id;
     std::string name;
@@ -36,7 +35,7 @@ private:
 
     int capacity;
     Date *exam_date;
-    Class_Time *class_time;
+    Time *class_time;
 };
 
 #endif

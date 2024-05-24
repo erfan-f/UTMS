@@ -38,6 +38,10 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		}
 		else
 			throw ArgumentException(ERROR_1);
+
+		if(!is_Number(id))
+            throw ArgumentException(ERROR_1);
+
 		*current_user = User_Login(users,id,password);
 		
 		std::ostringstream os;
@@ -92,7 +96,11 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		S >> target_id_argument >> target_id >> garbage_string; 
 		if(target_id_argument != CMD_ARGUMENT_1 || target_id == "")
 			throw ArgumentException(ERROR_1);
-		if(stoi(target_id) <= 0)
+
+		if(!is_Number(target_id))
+            throw ArgumentException(ERROR_1);
+
+		if(stoll(target_id) <= 0)
 			throw ArgumentException(ERROR_1);
 		if(garbage_string != "")
 			throw ArgumentException(ERROR_1);
@@ -161,13 +169,16 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		if(garbage_string != "")
 			throw ArgumentException(ERROR_1);
 
-		int capacity = std::stoi(capacity_str);
+		if(!is_Number(capacity_str)  || !is_Number(class_number) || !is_Number(course_id) || !is_Number(professor_id))
+            throw ArgumentException(ERROR_1);
 
-		if(capacity <=0 || std::stoi(class_number) <=0 || std::stoi(course_id) <=0 || std::stoi(professor_id) <=0)
+		int capacity = std::stoll(capacity_str);
+
+		if(capacity <=0 || std::stoll(class_number) <=0 || std::stoll(course_id) <=0 || std::stoll(professor_id) <=0)
 			throw ArgumentException(ERROR_1);
 
-		Unit *unit = Specify_Unit(units,course_id);
-		User *user = Specify_User(users,professor_id);
+		Unit *unit = Find_Unit(units,course_id);
+		User *user = Find_User(users,professor_id);
 
 		Professor *professor = dynamic_cast<Professor*>(user);
 		if(professor == NULL)
@@ -212,58 +223,12 @@ User* Post::User_Login(std::vector<User*> &users , std::string id , std::string 
 
 void Post::Connect_Two_User(std::vector<User*> &users , std::string target_id ,User **current_user)
 {
-	bool id_validation = false;
-	for(int i=0 ; i<users.size() ; i++)
-	{
-		if(users[i]->is_Valid_Id(target_id))
-		{
-			id_validation = true;
-			users[i]->Connect(*current_user);
-			(*current_user)->Connect(users[i]);
-			break;
-		}
-	}
-	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+	User *target_user = Find_User(users,target_id);
+
+	target_user->Connect(*current_user);
+	(*current_user)->Connect(target_user);
 }
 
-
-User* Post::Specify_User(std::vector<User*> &users , std::string professor_id)
-{
-	User *user;
-	bool id_validation = false;
-	for(int i=0 ; i<users.size() ; i++)
-	{
-		if(users[i]->is_Valid_Id(professor_id))
-		{
-			id_validation =true;
-			user = users[i];
-			break;
-		}	
-	}
-	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
-	return user;
-
-}
-
-Unit* Post::Specify_Unit(std::vector<Unit*> units, std::string unit_id)
-{
-	Unit *unit;
-	bool id_validation = false;
-	for(int i=0 ; i<units.size() ; i++)
-	{
-		if(units[i]->is_Valid_Id(unit_id))
-		{
-			id_validation = true;
-			unit = units[i];
-			break;
-		}
-	}
-	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
-	return unit;	
-}
 
 void Post::Text_Reader(std::string cmd_line,std::string &opr1,std::string &opr2,std::string &inp1,std::string &inp2)
 {

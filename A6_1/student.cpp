@@ -71,7 +71,6 @@ void Student::Delete_Course(std::string course_id)
 		if(courses[i]->is_Valid_Id(course_id))
 		{
 			id_validation = true;
-			delete courses[i];
 			courses.erase(courses.begin() + i);
 			Send_Notification(NOTIFICATION_4);
 			break;

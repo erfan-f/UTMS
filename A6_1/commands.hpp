@@ -14,7 +14,6 @@ const std::string USER_CMD_TYPE_8 = "course_offer";
 const std::string USER_CMD_TYPE_9 = "my_courses";
 
 
-
 #endif
 
 

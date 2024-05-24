@@ -23,7 +23,11 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		{
 			if(id_argument != CMD_ARGUMENT_1 || id == "")
 				throw ArgumentException(ERROR_1);
-			if(std::stoi(id) <= 0)
+
+			if(!is_Number(id))
+            	throw ArgumentException(ERROR_1);
+
+			if(std::stoll(id) <= 0)
 				throw ArgumentException(ERROR_1);
 			if(garbage_string != "")
 				throw ArgumentException(ERROR_1);
@@ -33,6 +37,9 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 	}
 	else if(command == USER_CMD_TYPE_4)
 	{
+		if( dynamic_cast<SystemOperator*>(*current_user) != NULL)
+			throw AcessibilityException(ERROR_3);
+		
 		std::string argument_1,argument_2,input_1,input_2,garbage_string;
 		std::string id,post_id;
 		S >> argument_1 >> input_1 >> argument_2 >> input_2 >> garbage_string;
@@ -52,7 +59,10 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		else
 			throw ArgumentException(ERROR_1);
 
-		if(std::stoi(id) <=0 || std::stoi(post_id) <=0)
+		if(!is_Number(id) || !is_Number(post_id))
+            throw ArgumentException(ERROR_1);
+
+		if(std::stoll(id) <0 || std::stoll(post_id) <=0)
 			throw ArgumentException(ERROR_1);
 		
 		if(garbage_string != "")
@@ -66,7 +76,10 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		S >> id_argument >> id >> garbage_string;
 		if(id_argument != CMD_ARGUMENT_1 || id == "")
 			throw ArgumentException(ERROR_1);
-		if(std::stoi(id) < 0)
+
+		if(!is_Number(id))
+            throw ArgumentException(ERROR_1);
+		if(std::stoll(id) < 0)
 			throw ArgumentException(ERROR_1);
 		if(garbage_string != "")
 			throw ArgumentException(ERROR_1);
@@ -113,58 +126,22 @@ void Get::get_All_Courses_Info(std::vector<Course*> courses , std::vector<std::s
 
 void Get::get_Course_Info(std::vector<Course*> courses , std::string course_id,std::vector<std::string> &response)
 {
-	Course *target_course;
-	bool id_validation = false;
-	for(int i=0 ; i<courses.size() ; i++)
-	{
-		if(courses[i]->is_Valid_Id(course_id))
-		{
-			id_validation = true;
-			target_course = courses[i];
-			break;
-		}
-	}
-	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+	Course *target_course = Find_Course(courses,course_id);
 	
 	response.push_back(target_course->get_All_Info());
 }
 
 
-void Get::get_Personal_Page(std::vector<User*> &users,std::string user_id,std::vector<std::string> &response)
+void Get::get_Personal_Page(std::vector<User*> users,std::string user_id,std::vector<std::string> &response)
 {
-	User *user;
-	bool id_validation = false;
-	for(int i=0 ; i<users.size() ; i++)
-	{
-		if(users[i]->is_Valid_Id(user_id))
-		{
-			id_validation = true;
-			user = users[i];
-			break;
-		}
-	}
-	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+	User *user = Find_User(users,user_id);
 
 	response.push_back(user->get_Page_Info());
 }
 
-void Get::get_User_Post(std::vector<User*> &users,std::string user_id,std::string post_id,std::vector<std::string> &response)
+void Get::get_User_Post(std::vector<User*> users,std::string user_id,std::string post_id,std::vector<std::string> &response)
 {
-	User *user;
-	bool id_validation = false;
-	for(int i=0 ; i<users.size() ; i++)
-	{
-		if(users[i]->is_Valid_Id(user_id))
-		{
-			id_validation = true;
-			user = users[i];
-			break;
-		}
-	}
-	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+	User *user = Find_User(users,user_id);
 	
 	response.push_back(user->get_Post(post_id));
 }
