@@ -266,9 +266,8 @@ void Post::Text_Reader(std::string cmd_line,std::string &opr1,std::string &opr2,
 
 void Post::Send_Public_Notification(std::vector<User*> users,std::string id,std::string name,std::string notice_text)
 {
-	Notification *new_notif = new Notification{id,name,notice_text};
 	for(int i=1 ; i<users.size() ; i++)
 	{
-		users[i]->Recieve_Notification(new_notif);
+		users[i]->Recieve_Notification(new Notification{id,name,notice_text});
 	}
 }

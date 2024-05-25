@@ -45,6 +45,8 @@ public:
 	void Recieve_Notification(Notification* notif);
 	std::string get_Notifications();
 	void Delete_Post(std::string post_id);
+	void Free_Allocated_Memory();
+
 
 protected:	
 	bool logged_in;

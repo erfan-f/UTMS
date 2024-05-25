@@ -21,7 +21,7 @@
 #include "Delete_method.hpp"
 
 
-const std::string OPERATOR_NAME = "admin";
+const std::string OPERATOR_NAME = "UT_account";
 const std::string OPERATOR_ID = "0";
 const std::string OPERATOR_PASSWORD = "UT_account";
 
@@ -54,6 +54,7 @@ public:
 	void Handle_Cmd(std::string cmd_line,std::vector<std::string> &response);
 	Method* Specify_Method(std::string method_type);
 	std::string Specify_Major(std::string id);
+	void Free_Allocated_Memory();
 
 private:
 	std::vector<User*> users;

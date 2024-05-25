@@ -17,5 +17,7 @@ int main(int argc ,char *argv[])
 	
 	Command_Operator(engine);
 
+	engine.Free_Allocated_Memory();
+
 	return 0;
 }

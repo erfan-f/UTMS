@@ -23,7 +23,7 @@ public:
     bool is_Valid_Semester(std::string semester);
     bool is_Valid_Major(std::string id);
     Week Specify_Day_Of_Week(std::string day_of_week_str);
-
+    void Free_Allocated_Memory();
 
 private:
     std::string id;

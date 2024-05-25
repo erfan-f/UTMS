@@ -144,3 +144,9 @@ Week Course::Specify_Day_Of_Week(std::string day_of_week_str)
 
     return day_of_week;
 }
+
+void Course::Free_Allocated_Memory()
+{
+    delete class_time;
+    delete exam_date;
+}

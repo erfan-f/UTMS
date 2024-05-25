@@ -218,3 +218,24 @@ void SystemController::Connect_To_All_User()
 		users[0]->Connect(users[i]);
 	}
 }
+
+void SystemController::Free_Allocated_Memory()
+{
+
+	for(int i=0 ; i<users.size()  ; i++)
+	{
+		users[i]->Free_Allocated_Memory();
+		delete users[i];
+	}
+	for(int i=0 ; i<majors.size() ; i++)
+		delete majors[i];
+	for(int i=0 ; i<units.size() ; i++)
+		delete units[i];
+	for(int i=0 ; i<courses.size() ; i++)
+	{
+		courses[i]->Free_Allocated_Memory();
+		delete courses[i];
+	}
+	for(int i=0 ; i<methods.size() ; i++)
+		delete methods[i];
+}

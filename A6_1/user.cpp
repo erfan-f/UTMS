@@ -135,10 +135,9 @@ std::string User::get_Post(std::string post_id)
 
 void User::Send_Notification(std::string notice_text)
 {
-	Notification *new_notif = new Notification{id,name,notice_text};
 	for(int i=0 ; i<connection_list.size() ; i++)
-	{
-		connection_list[i]->Recieve_Notification(new_notif);
+	{	
+		connection_list[i]->Recieve_Notification(new Notification{id,name,notice_text});
 	}
 }
 
@@ -157,8 +156,11 @@ std::string User::get_Notifications()
 	for(int i= notifications.size() - 1 ; i>=0 ; i--)
 	{
 		S << notifications[i]->user_id << " " << notifications[i]->name << ": " << notifications[i]->notice << std::endl;
+		delete notifications[i];
 	}
+
 	notifications.clear();
+	
 	return S.str();
 }
 
@@ -184,3 +186,12 @@ std::string User::get_Id()
 {
 	return id;
 }
+
+void User::Free_Allocated_Memory()
+{
+	for(int i=0 ; i<posts.size() ; i++)
+		delete posts[i];
+	
+	for(int i=0 ; i<notifications.size() ; i++)
+		delete notifications[i];
+}	
