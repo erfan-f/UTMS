@@ -13,7 +13,8 @@ Professor::Professor(std::string n,std::string i,std::string m,std::string m_i,s
 	valid_cmds.push_back(USER_CMD_TYPE_5);
 	valid_cmds.push_back(USER_CMD_TYPE_6);
 	valid_cmds.push_back(USER_CMD_TYPE_7);
-
+	valid_cmds.push_back(USER_CMD_TYPE_10);
+	valid_cmds.push_back(USER_CMD_TYPE_13);
 }
 
 
@@ -36,12 +37,12 @@ bool Professor::is_Free(std::string time)
 std::string Professor::get_Info()
 {
 	std::ostringstream S;
-	S << name << " " << major << " " << position << " ";
+	S << name << SPACE_CHAR << major << SPACE_CHAR << position << SPACE_CHAR;
 	for(int i=0 ; i<courses.size() ; i++)
 	{
 		S << courses[i]->get_Name();
 		if(i != courses.size() - 1)
-			S << ",";
+			S << WORD_SEPRATOR;
 	}
 
 	S << std::endl;
@@ -59,8 +60,17 @@ std::string Professor::get_Page_Info()
 
 	for(int j=0 ; j<posts.size() ; j++)
 	{
-		S <<  posts[j]->id << " " << posts[j]->title << std::endl;
+		S <<  posts[j]->id << SPACE_CHAR << posts[j]->title << std::endl;
 	}	
 	
 	return S.str();
 }
+
+
+
+
+
+
+
+
+

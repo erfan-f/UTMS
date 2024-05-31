@@ -64,3 +64,4 @@ void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std:
         response.push_back(os.str());
     }
 }
+
