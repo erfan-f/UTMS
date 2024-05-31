@@ -16,6 +16,9 @@ const std::string CMD_ARGUMENT_10 = "exam_date";
 const std::string CMD_ARGUMENT_11 = "class_number";
 const std::string CMD_ARGUMENT_12 = "image";
 const std::string CMD_ARGUMENT_13 = "photo";
+const std::string CMD_ARGUMENT_14 = "form_id";
+
+
 
 
 

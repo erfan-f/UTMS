@@ -15,6 +15,7 @@ Professor::Professor(std::string n,std::string i,std::string m,std::string m_i,s
 	valid_cmds.push_back(USER_CMD_TYPE_7);
 	valid_cmds.push_back(USER_CMD_TYPE_10);
 	valid_cmds.push_back(USER_CMD_TYPE_13);
+	valid_cmds.push_back(USER_CMD_TYPE_15);
 }
 
 
@@ -60,15 +61,22 @@ std::string Professor::get_Page_Info()
 
 	for(int j=0 ; j<posts.size() ; j++)
 	{
-		S <<  posts[j]->id << SPACE_CHAR << posts[j]->title << std::endl;
+		S << posts[j]->get_Info();
 	}	
 	
 	return S.str();
 }
 
 
-
-
+bool Professor::Do_You_Offer(Course* course)
+{
+	for(int i=0 ; i<courses.size() ; i++)
+	{
+		if(courses[i] == course)
+			return true;
+	}
+	return false;
+}
 
 
 

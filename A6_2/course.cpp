@@ -56,6 +56,15 @@ bool Course::is_Valid_Semester(std::string semester)
     return false;
 }
 
+bool Course::is_Valid_for_TA(std::string semester)
+{
+    if(std::stoll(semester) > std::stoll(prerequisite))
+        return true;
+    return false;
+}
+
+
+
 bool Course::is_Valid_Major(std::string id)
 {
     for(int i=0 ; i<majors_id.size() ; i++)

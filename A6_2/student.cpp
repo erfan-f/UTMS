@@ -15,6 +15,8 @@ Student::Student(std::string n,std::string i,std::string m,std::string m_i,std::
 	valid_cmds.push_back(USER_CMD_TYPE_7);
 	valid_cmds.push_back(USER_CMD_TYPE_9);
 	valid_cmds.push_back(USER_CMD_TYPE_10);
+	valid_cmds.push_back(USER_CMD_TYPE_14);
+
 
 }
 
@@ -41,10 +43,16 @@ std::string Student::get_Page_Info()
 	Sort_Posts();
 	for(int j=0 ; j<posts.size() ; j++)
 	{
-		S <<  posts[j]->id << SPACE_CHAR << posts[j]->title << std::endl;
+		S <<  posts[j]->get_Info();
 	}	
 	return S.str();
 }
+
+std::string Student::get_Semester()
+{
+	return semester;
+}
+
 
 bool Student::is_Allowed_to_Take(Course* new_course)
 {

@@ -86,6 +86,9 @@ bool Method::is_Cmd_Valid(std::string cmd)
 
 bool Method::is_Number(std::string str)
 {
+	if(str.length() == 0)
+		return false;
+		
     for(int i=0 ; i<str.length() ; i++)
     {
         if(str[i] < 48 || str[i] > 57)

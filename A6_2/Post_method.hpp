@@ -3,7 +3,7 @@
 
 #include <string>
 #include "method.hpp"
-#include "UT_post.hpp"
+#include "UT_media.hpp"
 
 
 class Post : public Method

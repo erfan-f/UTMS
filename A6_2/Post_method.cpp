@@ -63,7 +63,6 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 	}
 	else if(command == USER_CMD_TYPE_4)
 	{
-		//std::string argument,argument_1,argument_2,argument_3,input_1,input_2,input_3;
 		std::string argument,garbage_str;
 		std::string title,message,image;
 		bool title_is_entered = false;
@@ -100,8 +99,8 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 		if(garbage_str != "" || title == "" || message ==  ""  || image == "")
 			throw ArgumentException(ERROR_1);
 
-		UT_Post *p = new UT_Post{"",title,message,image};
-		(*current_user)->Add_Post(p);
+		UT_Post *new_post = new UT_Post("",title,message,image);
+		(*current_user)->Add_Post(new_post);
 
 		std::ostringstream os;
         os << DONE_MESSAGE << std::endl;
@@ -126,6 +125,7 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
 			throw AcessibilityException(ERROR_3);
 
 		Connect_Two_User(users,target_id,current_user);
+		
 		std::ostringstream os;
         os << DONE_MESSAGE << std::endl;
         response.push_back(os.str());
@@ -230,6 +230,111 @@ void Post::Process_Cmd(std::string cmd_line,std::vector<Major*> &majors,std::vec
         os << DONE_MESSAGE << std::endl;
         response.push_back(os.str());
 	}	
+	else if(command == USER_CMD_TYPE_13)
+	{
+		std::string argument,garbage_str;
+		std::string course_id,message;
+		bool course_id_is_entered = false;
+		bool message_is_entered = false;
+
+		for(int i=0 ; i<2 ; i++)
+		{
+			S >> argument;
+			if(argument == CMD_ARGUMENT_6 && !course_id_is_entered)
+			{
+				S >> course_id;
+				course_id_is_entered = true;
+				int course_id_string_position = cmd_line.find(course_id);
+				cmd_line.erase(0,course_id_string_position + course_id.length());
+				
+			}
+			else if(argument == CMD_ARGUMENT_5 && !message_is_entered)
+			{
+				message = Text_Reader(cmd_line);
+				message_is_entered = true;
+				S.str(cmd_line);
+			}
+			else 
+				throw ArgumentException(ERROR_1);
+		}
+		S >> garbage_str;
+		if(garbage_str != "" || course_id ==  ""  || message == "")
+			throw ArgumentException(ERROR_1);
+		
+		Course *course = Find_Course(courses,course_id);
+
+		Professor *professor = dynamic_cast<Professor*>(*current_user);
+		if(professor == NULL)
+			throw AcessibilityException(ERROR_3);
+
+		if(!professor->Do_You_Offer(course))
+			throw AvailabilityException(ERROR_3);
+
+		std::string title;
+		title = TA_FORM_TITLE + SPACE_CHAR + course->get_Name() + SPACE_CHAR + COURSE_TEXT;
+
+		TA_Form *new_form = new TA_Form("",title,message,course_id,course->get_All_Info());
+		professor->Add_Post(new_form);
+
+		std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
+	}
+	else if(command == USER_CMD_TYPE_14)
+	{
+		std::string argument_1,argument_2,input_1,input_2,garbage_string;
+		std::string professor_id,form_id;
+		S >> argument_1 >> input_1 >> argument_2 >> input_2 >> garbage_string;
+
+		if(garbage_string != "")
+			throw ArgumentException(ERROR_1);
+
+		if((argument_1 == CMD_ARGUMENT_7 || argument_1 == CMD_ARGUMENT_14) && (argument_2 == CMD_ARGUMENT_7 || argument_2 == CMD_ARGUMENT_14))
+		{
+			if(argument_1 == CMD_ARGUMENT_7)
+			{
+				professor_id = input_1;
+				form_id = input_2;
+			}
+			else
+			{
+				professor_id = input_2;
+				form_id = input_1;
+			}
+		}
+		else
+			throw ArgumentException(ERROR_1);
+
+
+		if(!is_Number(professor_id) || !is_Number(form_id))
+            throw ArgumentException(ERROR_1);
+
+		Student *student = dynamic_cast<Student*>(*current_user);
+		if(student == NULL)
+			throw AcessibilityException(ERROR_3);
+
+		User *user = Find_User(users,professor_id);
+		Professor *professor = dynamic_cast<Professor*>(user);
+		if(professor == NULL)
+			throw AvailabilityException(ERROR_2);
+
+		UT_Media *post = professor->Find_Post(form_id); 
+		TA_Form *form = dynamic_cast<TA_Form*>(post);
+		if(form == NULL)
+			throw AvailabilityException(ERROR_2);
+		
+
+		Course *course = Find_Course(courses,form->get_Course_Id());
+
+		if(!course->is_Valid_for_TA(student->get_Semester()))
+			throw AcessibilityException(ERROR_3);
+
+		form->Add_TA_Request(student->get_Id());
+
+		std::ostringstream os;
+        os << DONE_MESSAGE << std::endl;
+        response.push_back(os.str());
+	}
 }
 
 User* Post::User_Login(std::vector<User*> &users , std::string id , std::string password)
@@ -278,4 +383,5 @@ void Post::Send_Public_Notification(std::vector<User*> users,std::string id,std:
 	{
 		users[i]->Recieve_Notification(new Notification{id,name,notice_text});
 	}
+
 }

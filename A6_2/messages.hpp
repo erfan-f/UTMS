@@ -19,5 +19,8 @@ const std::string SPACE_CHAR = " ";
 const char NAME_POST_SEPRATOR = ':';
 
 
+const std::string TA_FORM_TITLE = "TA form for";
+const std::string COURSE_TEXT = "course";
+
 
 #endif

@@ -4,7 +4,7 @@ SystemController::SystemController()
 {
 	users.push_back(new SystemOperator(OPERATOR_NAME,OPERATOR_ID,OPERATOR_PASSWORD));
 
-	methods.push_back(new Post(METHOD_1,{USER_CMD_TYPE_1,USER_CMD_TYPE_2,USER_CMD_TYPE_6,USER_CMD_TYPE_4,USER_CMD_TYPE_8,USER_CMD_TYPE_10,USER_CMD_TYPE_13}));
+	methods.push_back(new Post(METHOD_1,{USER_CMD_TYPE_1,USER_CMD_TYPE_2,USER_CMD_TYPE_6,USER_CMD_TYPE_4,USER_CMD_TYPE_8,USER_CMD_TYPE_10,USER_CMD_TYPE_13,USER_CMD_TYPE_14,USER_CMD_TYPE_15}));
 	methods.push_back(new Get(METHOD_2,{USER_CMD_TYPE_3,USER_CMD_TYPE_5,USER_CMD_TYPE_4,USER_CMD_TYPE_7,USER_CMD_TYPE_9}));
 	methods.push_back(new Put(METHOD_3,{USER_CMD_TYPE_9}));
 	methods.push_back(new Delete(METHOD_4,{USER_CMD_TYPE_4,USER_CMD_TYPE_9}));
@@ -30,7 +30,6 @@ void SystemController::Read_Majors(std::string file_path)
 
 		Add_Major(name,id);
 	}
-
 }
 
 void SystemController::Read_Units(std::string file_path)

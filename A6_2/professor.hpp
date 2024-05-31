@@ -11,6 +11,7 @@ public:
 	bool is_Free(std::string time);
 	std::string get_Info();
 	std::string get_Page_Info();
+	bool Do_You_Offer(Course* course);
 
 private:
 	std::string position;

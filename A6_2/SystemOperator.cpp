@@ -27,7 +27,7 @@ std::string SystemOperator::get_Page_Info()
 	Sort_Posts();
 	for(int j=0 ; j<posts.size() ; j++)
 	{
-		S <<  posts[j]->id << SPACE_CHAR << posts[j]->title << std::endl;
+		S <<  posts[j]->get_Info();
 	}
 	return S.str();
 }

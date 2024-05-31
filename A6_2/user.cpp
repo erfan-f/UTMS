@@ -49,9 +49,9 @@ void User::Logout()
 	logged_in =false;
 }
 
-void User::Add_Post(UT_Post *post)
+void User::Add_Post(UT_Media *post)
 {	
-	post->id = std::to_string(num_of_posts_history +1);
+	post->set_Id(std::to_string(num_of_posts_history +1));
 	posts.push_back(post);
 	Send_Notification(NOTIFICATION_1);
 	num_of_posts_history++;
@@ -95,12 +95,12 @@ std::string User::get_Name()
 
 void User::Sort_Posts()
 {
-	UT_Post *temp;
+	UT_Media *temp;
 	for(int i=0 ; i<posts.size() ; i++)
 	{
 		for(int j=0 ; j<posts.size() -1 ; j++)
 		{
-			if(posts[j]->id < posts[j+1]->id)
+			if(posts[j]->Compare_Id(posts[j+1]))
 			{
 				temp = posts[j];
 				posts[j] = posts[j+1];
@@ -113,12 +113,12 @@ void User::Sort_Posts()
 std::string User::get_Post(std::string post_id)
 {
 	std::ostringstream S;
-	UT_Post *post;
+	UT_Media *post;
 	bool id_validation = false;
 
 	for(int i=0 ; i<posts.size() ; i++)
 	{
-		if(posts[i]->id == post_id)
+		if(posts[i]->is_Valid_Id(post_id))
 		{
 			id_validation = true;
 			post = posts[i];
@@ -128,7 +128,7 @@ std::string User::get_Post(std::string post_id)
 	if(!id_validation)
 		throw AvailabilityException(ERROR_2);
 	S << this->get_Info();
-	S << post->id << SPACE_CHAR << post->title <<SPACE_CHAR << post->message << std::endl;
+	S << post->get_All_Info();
 	return S.str();
 }
 
@@ -168,7 +168,7 @@ void User::Delete_Post(std::string post_id)
 	bool id_validation = false;
 	for(int i=0 ; i<posts.size() ; i++)
 	{
-		if(posts[i]->id == post_id)
+		if(posts[i]->is_Valid_Id(post_id))
 		{
 			id_validation = true;
 			delete posts[i];
@@ -194,4 +194,25 @@ void User::Free_Allocated_Memory()
 void User::Set_Profile_Photo(std::string photo_path)
 {
 	profile_photo_path = photo_path;
+}
+
+
+UT_Media* User::Find_Post(std::string post_id)
+{
+	UT_Media *target_post;
+	bool id_validation = false;
+	for(int i=0 ; i<posts.size() ; i++)
+	{
+		if(posts[i]->is_Valid_Id(post_id))
+		{
+			id_validation = true;
+			target_post = posts[i];
+			break;
+		}
+	}
+	if(!id_validation)
+		throw AvailabilityException(ERROR_2);
+	
+	return target_post;
+	
 }

@@ -23,6 +23,7 @@ public:
     bool is_Interrupted(Course *course);
     bool is_Interrupted(std::string time);
     bool is_Valid_Semester(std::string semester);
+    bool is_Valid_for_TA(std::string semester);
     bool is_Valid_Major(std::string id);
     Week Specify_Day_Of_Week(std::string day_of_week_str);
     void Add_Student(std::string student_id);
