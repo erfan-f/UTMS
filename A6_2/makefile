@@ -1,8 +1,11 @@
-utms: main.o SystemController.o SystemOperator.o user.o student.o professor.o  major.o unit.o course.o date.o time.o UT_media.o CommandOperator.o exception.o method.o Post_method.o Get_method.o Put_method.o Delete_method.o
-	g++ -std=c++20 main.o SystemController.o SystemOperator.o user.o student.o professor.o  major.o unit.o course.o date.o time.o UT_media.o CommandOperator.o exception.o method.o Post_method.o Get_method.o  Put_method.o Delete_method.o -o utms.out
+utms: main.o   io_Handler.o SystemController.o SystemOperator.o user.o student.o professor.o  major.o unit.o course.o date.o time.o UT_media.o CommandOperator.o exception.o method.o Post_method.o Get_method.o Put_method.o Delete_method.o
+	g++ -std=c++20 main.o io_Handler.o  SystemController.o SystemOperator.o user.o student.o professor.o  major.o unit.o course.o date.o time.o UT_media.o CommandOperator.o exception.o method.o Post_method.o Get_method.o  Put_method.o Delete_method.o -o utms.out
 
 main.o: main.cpp
 	g++ -std=c++20 -c main.cpp
+
+io_Handler.o: io_Handler.cpp
+	g++ -std=c++20 -c io_Handler.cpp
 
 SystemController.o: SystemController.cpp
 	g++ -std=c++20 -c SystemController.cpp

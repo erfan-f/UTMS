@@ -2,10 +2,12 @@
 
 void Command_Operator(SystemController &engine)
 {
+	IOHandler io_hanler;
 	std::string command_line;
 	std::vector <std::string> response;
 
-	while(getline(std::cin,command_line))
+	
+	while(io_hanler.get_Command_Line(command_line))
 	{
 		try
 		{
@@ -13,10 +15,9 @@ void Command_Operator(SystemController &engine)
 		}
 		catch(std::runtime_error &ex)
 		{
-			std::cerr << ex.what() << std::endl;
+			io_hanler.Print_Error(ex.what());
 		}
-		for(int i=0 ; i<response.size() ; i++)
-			std::cout << response[i] ;
+		io_hanler.Print_Data(response);
 		response.clear();
 	}
 

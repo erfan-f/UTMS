@@ -11,23 +11,23 @@ void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std:
 
 	S >> temp_str >> command >> temp_str;
 
-    if(command == USER_CMD_TYPE_4)
+    if(command == POST_CMD)
     {
         std::string id_operator,id,garbage_string;
 
         S >> id_operator >> id >> garbage_string;
         
-        if(id_operator != CMD_ARGUMENT_1 || id == "")
-            throw ArgumentException(ERROR_1);
+        if(id_operator != ID_ARGUMENT || id == "")
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         if(!is_Number(id))
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         if(std::stoll(id) <= 0)
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         if(garbage_string != "")
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         (*current_user)->Delete_Post(id);
         
@@ -35,27 +35,27 @@ void Delete::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std:
         os << DONE_MESSAGE << std::endl;
         response.push_back(os.str());
     }
-    else if(command == USER_CMD_TYPE_9)
+    else if(command == MY_COURSES_CMD)
     {
          std::string id_operator,id,garbage_string;
 
         S >> id_operator >> id >> garbage_string;
         
-        if(id_operator != CMD_ARGUMENT_1 || id == "")
-            throw ArgumentException(ERROR_1);
+        if(id_operator != ID_ARGUMENT || id == "")
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         if(!is_Number(id))
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         if(std::stoll(id) <= 0)
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         if(garbage_string != "")
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         Student* student= dynamic_cast<Student*>(*current_user);
         if(student == NULL)
-            throw AcessibilityException(ERROR_3);
+            throw AcessibilityException(PERMISSION_DENIED_ERROR);
             
         student->Delete_Course(id);
 

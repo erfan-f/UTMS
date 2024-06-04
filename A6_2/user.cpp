@@ -20,10 +20,6 @@ User::User(std::string n,std::string i,std::string m,std::string m_i,std::string
 	num_of_posts_history = 0;
 }
 
-bool User::is_Logged_In()
-{
-	return logged_in;
-}
 
 bool User::is_Valid_Id(std::string i)
 {
@@ -49,11 +45,16 @@ void User::Logout()
 	logged_in =false;
 }
 
-void User::Add_Post(UT_Media *post)
+void User::Add_Post(UT_Media *new_post)
 {	
-	post->set_Id(std::to_string(num_of_posts_history +1));
-	posts.push_back(post);
-	Send_Notification(NOTIFICATION_1);
+	new_post->set_Id(std::to_string(num_of_posts_history +1));
+	posts.push_back(new_post);
+	UT_Post *ut_post = dynamic_cast<UT_Post*>(new_post);
+	if(ut_post != NULL)
+		Send_Notification(NEW_POST_NOTIF);
+	else
+		Send_Notification(NEW_FORM_NOTIF);	
+
 	num_of_posts_history++;
 }
 
@@ -62,12 +63,12 @@ void User::Connect(User *target)
 	for(int i=0 ; i<connection_list.size() ; i++)
 	{
 		if(connection_list[i] == target)
-			throw AvailabilityException(ERROR_1);
+			throw AvailabilityException(BAD_REQUEST_ERROR);
 	}
 	connection_list.push_back(target);
 }
 
-bool User::Permision_Check(std::string cmd)
+bool User::Comamnd_Permision_Check(std::string cmd)
 {
 	for(int i=0 ; i<valid_cmds.size(); i++)
 	{
@@ -126,7 +127,7 @@ std::string User::get_Post(std::string post_id)
 		}
 	}
 	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+		throw AvailabilityException(NOT_FOUND_ERROR);
 	S << this->get_Info();
 	S << post->get_All_Info();
 	return S.str();
@@ -150,11 +151,11 @@ std::string User::get_Notifications()
 	std::ostringstream S;
 
 	if(notifications.size() == 0)
-		throw AvailabilityException(ERROR_4);
+		throw AvailabilityException(EMPTY_ERROR);
 
 	for(int i= notifications.size() - 1 ; i>=0 ; i--)
 	{
-		S << notifications[i]->user_id << SPACE_CHAR << notifications[i]->name << NAME_POST_SEPRATOR  << SPACE_CHAR << notifications[i]->notice << std::endl;
+		S << notifications[i]->id << SPACE_CHAR << notifications[i]->name << NAME_POST_SEPRATOR  << SPACE_CHAR << notifications[i]->notice << std::endl;
 		delete notifications[i];
 	}
 
@@ -177,7 +178,7 @@ void User::Delete_Post(std::string post_id)
 		}
 	}
 	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+		throw AvailabilityException(NOT_FOUND_ERROR);
 }
 
 
@@ -211,7 +212,7 @@ UT_Media* User::Find_Post(std::string post_id)
 		}
 	}
 	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+		throw AvailabilityException(NOT_FOUND_ERROR);
 	
 	return target_post;
 	

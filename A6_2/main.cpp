@@ -2,8 +2,6 @@
 #include "SystemController.hpp"
 #include "functions.hpp"
 
-
-
 int main(int argc ,char *argv[])
 {
 	SystemController engine = SystemController();

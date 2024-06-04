@@ -10,6 +10,7 @@ Course::Course(std::string i,std::string n , std::string p_n,std::string p_i , i
     class_number = c_n;
     majors_id = m_i;
     prerequisite = pre;
+    num_of_posts_history = 0;
 
     std::stringstream S(d);
     std::string day,month,year;
@@ -33,10 +34,10 @@ Course::Course(std::string i,std::string n , std::string p_n,std::string p_i , i
 
 
     if((start_time < 1 && start_time > 24) || (end_time < 1 && end_time > 24))
-        throw ArgumentException(ERROR_1);
+        throw ArgumentException(BAD_REQUEST_ERROR);
     
     if(end_time <= start_time)
-        throw ArgumentException(ERROR_1);
+        throw ArgumentException(BAD_REQUEST_ERROR);
 
     class_time = new Time(day_of_week,start_time,end_time);
 
@@ -99,6 +100,51 @@ std::string Course::get_Name()
     return name;
 }
 
+std::string Course::get_Channel_Info()
+{
+    std::ostringstream S;
+    S << get_All_Info();
+
+    Sort_Channel_Posts();
+    
+    for(int i=0 ; i<channel.size() ; i++)
+    {
+        S  << channel[i]->get_Info_Include_Author();
+    }
+    return S.str();
+}
+
+
+std::string Course::get_Channel_Post(std::string post_id)
+{
+    bool post_id_validation = false;
+    UT_Post *target_post;
+    for(int i=0 ; i<channel.size() ; i++)
+    {
+        if(channel[i]->get_Id() == post_id)
+        {
+            post_id_validation =true;
+            target_post = channel[i];
+            break;
+        }
+    }
+    if(!post_id_validation)
+        throw AvailabilityException(NOT_FOUND_ERROR);
+    
+    return target_post->get_All_Info_Include_Author();
+}
+
+
+std::string Course::get_Id()
+{
+    return id;
+}
+
+std::vector<std::string> Course::get_Participants_Id()
+{
+    return participants_id;
+}
+
 bool Course::is_Interrupted(Course *course)
 {
     if(exam_date->is_Equal_Date(course->exam_date))
@@ -134,6 +180,39 @@ bool Course::is_Interrupted(std::string time)
     return false;
 }
 
+bool Course::is_Allowed_to_Post_in_Channel(std::string user_id)
+{
+    if(user_id == professor_id)
+        return true;
+
+    for(int i=0 ; i<teaching_assistants_id.size() ; i++)
+    {
+        if(teaching_assistants_id[i] == user_id)
+            return true;
+    }
+    return false;
+}
+
+
+bool Course::is_Allowed_to_View_Channel(std::string user_id)
+{
+    if(user_id == professor_id)
+        return true;
+
+    for(int i=0 ; i<teaching_assistants_id.size() ; i++)
+    {
+        if(teaching_assistants_id[i] == user_id)
+            return true;
+    }
+    for(int i=0 ; i<participants_id.size() ; i++)
+    {
+        if(participants_id[i] == user_id)
+            return true;
+    }
+
+    return false;
+}
+
 
 Week Course::Specify_Day_Of_Week(std::string day_of_week_str)
 {
@@ -150,7 +229,7 @@ Week Course::Specify_Day_Of_Week(std::string day_of_week_str)
     else if(day_of_week_str == "Wednesday")
         day_of_week = Wednesday;
     else
-        throw ArgumentException(ERROR_1);
+        throw ArgumentException(BAD_REQUEST_ERROR);
 
     return day_of_week;
 }
@@ -163,5 +242,35 @@ void Course::Free_Allocated_Memory()
 
 void Course::Add_Student(std::string student_id)
 {
-    students_id.push_back(student_id);
+    participants_id.push_back(student_id);
+}
+
+void Course::Add_TA(std::string volunteer_id)
+{
+    teaching_assistants_id.push_back(volunteer_id);
+}
+
+void Course::Add_Post_to_Channel(UT_Post *new_post)
+{
+    new_post->set_Id(std::to_string(num_of_posts_history +1));
+    channel.push_back(new_post);
+	num_of_posts_history++;
+}
+
+
+void Course::Sort_Channel_Posts()
+{
+	UT_Post *temp;
+	for(int i=0 ; i<channel.size() ; i++)
+	{
+		for(int j=0 ; j<channel.size() -1 ; j++)
+		{
+			if(channel[j]->Compare_Id(channel[j+1]))
+			{
+				temp = channel[j];
+				channel[j] = channel[j+1];
+				channel[j+1] = temp;
+			}
+		}
+	}
 }

@@ -30,12 +30,11 @@ public:
 	virtual std::string get_Info() = 0;
 	virtual std::string get_Page_Info() = 0;
 	bool is_Valid_Id (std::string i);
-	bool is_Logged_In();
 	bool is_Valid_Password(std::string p);
-	bool Permision_Check(std::string cmd);
+	bool Comamnd_Permision_Check(std::string cmd);
 	void Login();
 	void Logout();
-	void Add_Post(UT_Media *post);
+	void Add_Post(UT_Media *new_post);
 	void Connect(User *target);
 	void Sort_Posts();
 	void Send_Notification(std::string notice_text);
@@ -66,6 +65,7 @@ protected:
 	std::vector<Course*> courses;
 	std::vector<Notification*> notifications;
 	int num_of_posts_history;
+
 };
 
 #endif

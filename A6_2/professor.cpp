@@ -6,16 +6,18 @@ Professor::Professor(std::string n,std::string i,std::string m,std::string m_i,s
 	position = po;
 	user_type = USER_TYPE_1;
 
-	valid_cmds.push_back(USER_CMD_TYPE_1);
-	valid_cmds.push_back(USER_CMD_TYPE_2);
-	valid_cmds.push_back(USER_CMD_TYPE_3);
-	valid_cmds.push_back(USER_CMD_TYPE_4);
-	valid_cmds.push_back(USER_CMD_TYPE_5);
-	valid_cmds.push_back(USER_CMD_TYPE_6);
-	valid_cmds.push_back(USER_CMD_TYPE_7);
-	valid_cmds.push_back(USER_CMD_TYPE_10);
-	valid_cmds.push_back(USER_CMD_TYPE_13);
-	valid_cmds.push_back(USER_CMD_TYPE_15);
+	valid_cmds.push_back(LOGIN_CMD);
+	valid_cmds.push_back(LOGOUT_CMD);
+	valid_cmds.push_back(COURSES_CMD);
+	valid_cmds.push_back(POST_CMD);
+	valid_cmds.push_back(PERSONAL_PAGE_CMD);
+	valid_cmds.push_back(CONNECT_CMD);
+	valid_cmds.push_back(NOTIFICATION_CMD);
+	valid_cmds.push_back(PROFILE_PHOTO_CMD);
+	valid_cmds.push_back(COURSE_CHANNEL_CMD);
+	valid_cmds.push_back(COURSE_POST_CMD);
+	valid_cmds.push_back(TA_FORM_CMD);
+	valid_cmds.push_back(CLOSE_TA_FORM_CMD);
 }
 
 
@@ -78,7 +80,15 @@ bool Professor::Do_You_Offer(Course* course)
 	return false;
 }
 
-
-
-
-
+void Professor::Delete_Form(TA_Form *form)
+{
+	for(int i=0 ; i<posts.size() ; i++)
+	{
+		if(posts[i] == form)
+		{
+			delete form;
+			posts.erase(posts.begin() + i);
+			break;
+		}
+	}
+}

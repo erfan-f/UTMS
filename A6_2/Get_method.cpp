@@ -11,7 +11,7 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 
 	S >> temp_str >> command >> temp_str;
 
-	if(command == USER_CMD_TYPE_3)
+	if(command == COURSES_CMD)
 	{
 		std::string id_argument,id,garbage_string;
 		S >> id_argument >> id >> garbage_string;
@@ -21,31 +21,31 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 		}
 		else
 		{
-			if(id_argument != CMD_ARGUMENT_1 || id == "")
-				throw ArgumentException(ERROR_1);
+			if(id_argument != ID_ARGUMENT || id == "")
+				throw ArgumentException(BAD_REQUEST_ERROR);
 
 			if(!is_Number(id))
-            	throw ArgumentException(ERROR_1);
+            	throw ArgumentException(BAD_REQUEST_ERROR);
 
 			if(std::stoll(id) <= 0)
-				throw ArgumentException(ERROR_1);
+				throw ArgumentException(BAD_REQUEST_ERROR);
 			if(garbage_string != "")
-				throw ArgumentException(ERROR_1);
+				throw ArgumentException(BAD_REQUEST_ERROR);
 
 			get_Course_Info(courses,id,response);
 		}
 	}
-	else if(command == USER_CMD_TYPE_4)
+	else if(command == POST_CMD)
 	{
 		if( dynamic_cast<SystemOperator*>(*current_user) != NULL)
-			throw AcessibilityException(ERROR_3);
+			throw AcessibilityException(PERMISSION_DENIED_ERROR);
 		
 		std::string argument_1,argument_2,input_1,input_2,garbage_string;
 		std::string id,post_id;
 		S >> argument_1 >> input_1 >> argument_2 >> input_2 >> garbage_string;
-		if((argument_1 == CMD_ARGUMENT_1 || argument_1 == CMD_ARGUMENT_3 ) && (argument_2 == CMD_ARGUMENT_1 || argument_2 == CMD_ARGUMENT_3))
+		if((argument_1 == ID_ARGUMENT || argument_1 == POST_ID_ARGUMENT ) && (argument_2 == ID_ARGUMENT || argument_2 == POST_ID_ARGUMENT))
 		{
-			if(argument_1 == CMD_ARGUMENT_1)
+			if(argument_1 == ID_ARGUMENT)
 			{
 				id = input_1;
 				post_id = input_2;
@@ -57,65 +57,123 @@ void Get::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 			}
 		}
 		else
-			throw ArgumentException(ERROR_1);
+			throw ArgumentException(BAD_REQUEST_ERROR);
 
 		if(!is_Number(id) || !is_Number(post_id))
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
 		if(std::stoll(id) <0 || std::stoll(post_id) <=0)
-			throw ArgumentException(ERROR_1);
+			throw ArgumentException(BAD_REQUEST_ERROR);
 		
 		if(garbage_string != "")
-			throw ArgumentException(ERROR_1);
+			throw ArgumentException(BAD_REQUEST_ERROR);
 
 		get_User_Post(users,id,post_id,response);
 	}
-	else if(command == USER_CMD_TYPE_5)
+	else if(command == PERSONAL_PAGE_CMD)
 	{
 		std::string id_argument,id,garbage_string;
 		S >> id_argument >> id >> garbage_string;
-		if(id_argument != CMD_ARGUMENT_1 || id == "")
-			throw ArgumentException(ERROR_1);
+		if(id_argument != ID_ARGUMENT || id == "")
+			throw ArgumentException(BAD_REQUEST_ERROR);
 
 		if(!is_Number(id))
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 		if(std::stoll(id) < 0)
-			throw ArgumentException(ERROR_1);
+			throw ArgumentException(BAD_REQUEST_ERROR);
 		if(garbage_string != "")
-			throw ArgumentException(ERROR_1);
+			throw ArgumentException(BAD_REQUEST_ERROR);
 
 		get_Personal_Page(users,id,response);
 	}
-	else if(command == USER_CMD_TYPE_7)
+	else if(command == NOTIFICATION_CMD)
 	{
 		std::string argument_str;
 		S >> argument_str;
 		
 		if(argument_str != "")
-			throw ArgumentException(ERROR_1);
+			throw ArgumentException(BAD_REQUEST_ERROR);
 		
 		response.push_back((*current_user)->get_Notifications());
 	}
-	else if(command == USER_CMD_TYPE_9)
+	else if(command == MY_COURSES_CMD)
 	{
 		std::string argument_str;
 		S >> argument_str;
 		if(argument_str != "")
-			throw ArgumentException(ERROR_1);
+			throw ArgumentException(BAD_REQUEST_ERROR);
 
 		Student *student = dynamic_cast<Student*>(*current_user);
 		if(student == NULL)
-            throw AcessibilityException(ERROR_3);
+            throw AcessibilityException(PERMISSION_DENIED_ERROR);
 
 		response.push_back(student->get_Courses_Info());
 	}
-}
+	else if(command == COURSE_CHANNEL_CMD)
+	{
+		std::string course_id_argument,course_id,garbage_str;
 
+		S >> course_id_argument >> course_id >> garbage_str;
+
+
+		if( course_id_argument != ID_ARGUMENT || !is_Number(course_id) || course_id == ""  || garbage_str != "")
+			throw ArgumentException(BAD_REQUEST_ERROR);
+
+		Course *course = Find_Course(courses,course_id);
+
+		if(!course->is_Allowed_to_View_Channel((*current_user)->get_Id()))
+			throw AcessibilityException(PERMISSION_DENIED_ERROR);
+
+		response.push_back(course->get_Channel_Info());
+
+		}
+	else if(command == COURSE_POST_CMD)
+	{
+		std::string argument,garbage_str;
+		std::string course_id,post_id;
+		bool course_id_is_entered = false;
+		bool post_id_is_entered = false;
+
+		for(int i=0 ; i<2 ; i++)
+		{
+			S >> argument;
+			if(argument == ID_ARGUMENT && !course_id_is_entered)
+			{
+				S >> course_id;
+				course_id_is_entered = true;
+			}
+			else if(argument == POST_ID_ARGUMENT && !post_id_is_entered)
+			{
+				S >> post_id;
+				post_id_is_entered = true;
+			}
+			else
+				throw ArgumentException(BAD_REQUEST_ERROR);
+
+			argument = "";
+		}
+
+		S >> garbage_str;
+		if(garbage_str != ""  || !is_Number(course_id) || course_id == "" || post_id == "" )
+			throw ArgumentException(BAD_REQUEST_ERROR);
+
+		Course *course = Find_Course(courses,course_id);
+
+		std::string course_info = course->get_All_Info();
+		std::string post_info = course->get_Channel_Post(post_id);
+
+		if(!course->is_Allowed_to_View_Channel((*current_user)->get_Id()))
+			throw AcessibilityException(PERMISSION_DENIED_ERROR);
+
+		response.push_back(course_info);	
+		response.push_back(post_info);	
+	}
+}
 
 void Get::get_All_Courses_Info(std::vector<Course*> courses , std::vector<std::string> &response)
 {	
 	if(courses.size() == 0)
-		throw CommandException(ERROR_4);
+		throw CommandException(EMPTY_ERROR);
 
 	for(int i=0 ; i<courses.size(); i++)
 	{
@@ -138,6 +196,7 @@ void Get::get_Personal_Page(std::vector<User*> users,std::string user_id,std::ve
 
 	response.push_back(user->get_Page_Info());
 }
+
 
 void Get::get_User_Post(std::vector<User*> users,std::string user_id,std::string post_id,std::vector<std::string> &response)
 {

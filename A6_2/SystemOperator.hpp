@@ -10,7 +10,7 @@ public:
     SystemOperator(std::string n , std::string i , std::string pass);
     std::string get_Info();
     std::string get_Page_Info();
-
+    
 };
 
 #endif

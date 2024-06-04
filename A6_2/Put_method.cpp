@@ -14,31 +14,31 @@ void Put::Process_Cmd(std::string cmd_line ,std::vector<Major*> &majors ,std::ve
 	S >> command;
 	S >> temp_str;
 
-    if(command == USER_CMD_TYPE_9)
+    if(command == MY_COURSES_CMD)
     {
         std::string id_argument,id,garbage_string;
         S >> id_argument >> id >> garbage_string;
 
-        if(id_argument != CMD_ARGUMENT_1 || id == "")
-            throw ArgumentException(ERROR_1);
+        if(id_argument != ID_ARGUMENT || id == "")
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         if(!is_Number(id))
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         if(stoll(id) <= 0)
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
         if(garbage_string != "")
-            throw ArgumentException(ERROR_1);
+            throw ArgumentException(BAD_REQUEST_ERROR);
 
         Course *target_course;
         target_course = Find_Course(courses,id);
 
         Student *student = dynamic_cast<Student*>(*current_user);
         if(student == NULL)
-            throw AcessibilityException(ERROR_3);
+            throw AcessibilityException(PERMISSION_DENIED_ERROR);
 
         if(!student->is_Allowed_to_Take(target_course))
-            throw AcessibilityException(ERROR_3);
+            throw AcessibilityException(PERMISSION_DENIED_ERROR);
 
         target_course->Add_Student(student->get_Id());
 

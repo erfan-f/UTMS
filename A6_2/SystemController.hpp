@@ -29,10 +29,10 @@ const char SEPRATOR = ',';
 const char IN_LINE_SEPRATOR = ';';
 
 const int NUM_OF_METHOD = 4;
-const std::string METHOD_1 = "POST";
-const std::string METHOD_2 = "GET";
-const std::string METHOD_3 = "PUT";
-const std::string METHOD_4 = "DELETE";
+const std::string POST_MTHD = "POST";
+const std::string GET_MTHD = "GET";
+const std::string PUT_MTHD = "PUT";
+const std::string DELETE_MTHD = "DELETE";
 
 const std::string OPERATOR_ARGUMANT = "?";
 
@@ -47,13 +47,7 @@ public:
 	void Read_Professor(std::string file_path);
 	void Read_Student(std::string file_path);
 	void Connect_To_All_User();
-	void Add_Major(std::string name,std::string id);
-	void Add_Unit(std::string name,std::string id,int credit,std::string prerequisite,std::vector<std::string> majors_id);
-	void Add_Professor(std::string name,std::string id,std::string major,std::string major_id,std::string position,std::string password);
-	void Add_Student(std::string name,std::string id,std::string major,std::string major_id,std::string semester,std::string password);
 	void Handle_Cmd(std::string cmd_line,std::vector<std::string> &response);
-	Method* Specify_Method(std::string method_type);
-	std::string Specify_Major(std::string id);
 	void Free_Allocated_Memory();
 
 private:
@@ -64,6 +58,12 @@ private:
 	std::vector<Method*> methods;
 	std::vector<std::string> user_cmds;
 	User *current_user;
+	void Add_Major(std::string name,std::string id);
+	void Add_Unit(std::string name,std::string id,int credit,std::string prerequisite,std::vector<std::string> majors_id);
+	void Add_Professor(std::string name,std::string id,std::string major,std::string major_id,std::string position,std::string password);
+	void Add_Student(std::string name,std::string id,std::string major,std::string major_id,std::string semester,std::string password);
+	Method* Specify_Method(std::string method_type);
+	std::string Specify_Major(std::string id);
 };
 
 #endif

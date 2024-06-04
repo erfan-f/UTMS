@@ -26,10 +26,6 @@ bool Time::is_Interrupt_Time(Week day_of_week , int start_time , int end_time)
         return false;
 }
 
-void Time::Print()
-{
-   std::cout << Day_To_String(day) << DAY_TIME_SEPRATOR << start << START_END_SEPRATOR << end;
-}
 
 std::string Time::get_Time()
 {

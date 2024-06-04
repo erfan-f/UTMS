@@ -4,10 +4,11 @@ SystemController::SystemController()
 {
 	users.push_back(new SystemOperator(OPERATOR_NAME,OPERATOR_ID,OPERATOR_PASSWORD));
 
-	methods.push_back(new Post(METHOD_1,{USER_CMD_TYPE_1,USER_CMD_TYPE_2,USER_CMD_TYPE_6,USER_CMD_TYPE_4,USER_CMD_TYPE_8,USER_CMD_TYPE_10,USER_CMD_TYPE_13,USER_CMD_TYPE_14,USER_CMD_TYPE_15}));
-	methods.push_back(new Get(METHOD_2,{USER_CMD_TYPE_3,USER_CMD_TYPE_5,USER_CMD_TYPE_4,USER_CMD_TYPE_7,USER_CMD_TYPE_9}));
-	methods.push_back(new Put(METHOD_3,{USER_CMD_TYPE_9}));
-	methods.push_back(new Delete(METHOD_4,{USER_CMD_TYPE_4,USER_CMD_TYPE_9}));
+	methods.push_back(new Post(POST_MTHD,{LOGIN_CMD,LOGOUT_CMD,POST_CMD,CONNECT_CMD,COURSE_OFFER_CMD
+											,PROFILE_PHOTO_CMD,COURSE_POST_CMD,TA_FORM_CMD,TA_REQUEST_CMD,CLOSE_TA_FORM_CMD}));
+	methods.push_back(new Get(GET_MTHD,{COURSES_CMD,PERSONAL_PAGE_CMD,POST_CMD,NOTIFICATION_CMD,MY_COURSES_CMD,COURSE_CHANNEL_CMD,COURSE_POST_CMD}));
+	methods.push_back(new Put(PUT_MTHD,{MY_COURSES_CMD}));
+	methods.push_back(new Delete(DELETE_MTHD,{POST_CMD,MY_COURSES_CMD}));
 
 }
 
@@ -156,15 +157,15 @@ void SystemController::Handle_Cmd(std::string cmd_line,std::vector<std::string> 
 
 	if(!method->is_Cmd_Valid(command))
 	{
-		throw CommandException(ERROR_2);
+		throw CommandException(NOT_FOUND_ERROR);
 	}
 	if(operator_argument != OPERATOR_ARGUMANT)
-		throw CommandException(ERROR_1);
+		throw CommandException(BAD_REQUEST_ERROR);
 
-	if(command == USER_CMD_TYPE_1 )
+	if(command == LOGIN_CMD )
 	{
 		if(current_user != NULL)
-			throw AcessibilityException(ERROR_3);
+			throw AcessibilityException(PERMISSION_DENIED_ERROR);
 
 		method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user,response);
 
@@ -172,12 +173,12 @@ void SystemController::Handle_Cmd(std::string cmd_line,std::vector<std::string> 
 	else
 	{
 		if(current_user == NULL)
-			throw AcessibilityException(ERROR_3);
+			throw AcessibilityException(PERMISSION_DENIED_ERROR);
 		
-		if(current_user->Permision_Check(command))
+		if(current_user->Comamnd_Permision_Check(command))
 			method->Process_Cmd(cmd_line,majors,units,users,courses,&current_user,response);
 		else	
-			throw AcessibilityException(ERROR_3);
+			throw AcessibilityException(PERMISSION_DENIED_ERROR);
 	}
 	
 }
@@ -191,7 +192,7 @@ Method* SystemController::Specify_Method(std::string method_type)
 			return methods[i];
 		}
 	}
-	throw MethodException(ERROR_1);
+	throw MethodException(BAD_REQUEST_ERROR);
 }
 
 std::string SystemController::Specify_Major(std::string id)

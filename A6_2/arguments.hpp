@@ -3,23 +3,20 @@
 
 #include <string>
 
-const std::string CMD_ARGUMENT_1 = "id";
-const std::string CMD_ARGUMENT_2 = "password";
-const std::string CMD_ARGUMENT_3 = "post_id";
-const std::string CMD_ARGUMENT_4 = "title";
-const std::string CMD_ARGUMENT_5 = "message";
-const std::string CMD_ARGUMENT_6 = "course_id";
-const std::string CMD_ARGUMENT_7 = "professor_id";
-const std::string CMD_ARGUMENT_8 = "capacity";
-const std::string CMD_ARGUMENT_9 = "time";
-const std::string CMD_ARGUMENT_10 = "exam_date";
-const std::string CMD_ARGUMENT_11 = "class_number";
-const std::string CMD_ARGUMENT_12 = "image";
-const std::string CMD_ARGUMENT_13 = "photo";
-const std::string CMD_ARGUMENT_14 = "form_id";
-
-
-
+const std::string ID_ARGUMENT = "id";
+const std::string PASSWORD_ARGUMENT = "password";
+const std::string POST_ID_ARGUMENT = "post_id";
+const std::string TITLE_ARGUMENT = "title";
+const std::string MESSAGE_ARGUMENT = "message";
+const std::string COURSE_ID_ARGUMENT = "course_id";
+const std::string PROFESSOR_ARGUMENT = "professor_id";
+const std::string CAPACITY_ARGUMENT = "capacity";
+const std::string TIME_ARGUMENT = "time";
+const std::string EXAM_DATE_ARGUMENT = "exam_date";
+const std::string CLASS_NUMBER_ARGUMENT = "class_number";
+const std::string IMAGE_ARGUMENT = "image";
+const std::string PHOTO_ARGUMENT = "photo";
+const std::string FORM_ID_ARGUMENT = "form_id";
 
 
 #endif

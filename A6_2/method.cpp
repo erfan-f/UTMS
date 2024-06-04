@@ -21,7 +21,7 @@ User* Method::Find_User(std::vector<User*> users,std::string user_id)
 		}	
 	}
 	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+		throw AvailabilityException(NOT_FOUND_ERROR);
 
 	return user;
 }
@@ -41,7 +41,7 @@ Unit* Method::Find_Unit(std::vector<Unit*> units,std::string unit_id)
 		}
 	}
 	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+		throw AvailabilityException(NOT_FOUND_ERROR);
 
 	return unit;
 }
@@ -61,7 +61,7 @@ Course* Method::Find_Course(std::vector<Course*> courses,std::string course_id)
 		}
 	}
 	if(!id_validation)
-		throw AvailabilityException(ERROR_2);
+		throw AvailabilityException(NOT_FOUND_ERROR);
 
 	return course;
 }

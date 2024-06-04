@@ -1,10 +1,11 @@
 #include "UT_media.hpp"
 
-UT_Media::UT_Media(std::string i,std::string t,std::string m)
+UT_Media::UT_Media(std::string i,std::string t,std::string m,std::string a)
 {
     id = i;
     title = t;
     message = m;
+    author = a;
 }
 
 
@@ -27,6 +28,11 @@ void UT_Media::set_Id(std::string i)
     id =i;
 }
 
+std::string UT_Media::get_Id()
+{
+    return id;
+}
+
 
 std::string UT_Media::get_Info()
 {
@@ -36,13 +42,12 @@ std::string UT_Media::get_Info()
 }
  
 
-UT_Post::UT_Post(std::string i,std::string t,std::string m,std::string im_p)
-:UT_Media(i,t,m) 
+UT_Post::UT_Post(std::string i,std::string t,std::string m,std::string a,std::string im_p)
+:UT_Media(i,t,m,a) 
 {
     image_path =im_p;
 }
 
- 
 
 std::string UT_Post::get_All_Info()
 {
@@ -51,8 +56,23 @@ std::string UT_Post::get_All_Info()
     return S.str();
 }
 
-TA_Form::TA_Form(std::string i,std::string t,std::string m,std::string c_i,std::string c_info)
-:UT_Media(i,t,m) 
+std::string UT_Post::get_Info_Include_Author()
+{
+    std::stringstream S;
+	S << id << SPACE_CHAR  << author << SPACE_CHAR << title  << std::endl;
+    return S.str();
+}
+
+std::string UT_Post::get_All_Info_Include_Author()
+{
+    std::stringstream S;
+	S << id << SPACE_CHAR << author << SPACE_CHAR << title <<SPACE_CHAR << message << std::endl;
+    return S.str();
+}
+
+
+TA_Form::TA_Form(std::string i,std::string t,std::string m,std::string a,std::string c_i,std::string c_info)
+:UT_Media(i,t,m,a) 
 {
     course_id =c_i;
     course_information = c_info;
@@ -72,7 +92,12 @@ std::string TA_Form::get_Course_Id()
     return course_id;
 }
 
+std::vector<std::string> TA_Form::get_Volunteers()
+{
+    return volunteers_id;
+}
+
 void TA_Form::Add_TA_Request(std::string student_id)
 {
-    volunteers.push_back(student_id);
+    volunteers_id.push_back(student_id);
 }
